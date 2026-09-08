@@ -1,0 +1,104 @@
+.product-showcase > div {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 40px 0;
+}
+
+.product-showcase > div:not(:last-child) {
+  border-bottom: 1px solid var(--color-accent);
+}
+
+.product-showcase-img-col {
+  order: 0;
+  line-height: 0;
+}
+
+.product-showcase-img-col img {
+  width: 100%;
+  border-radius: 16px;
+  filter: drop-shadow(0 20px 40px rgb(0 180 216 / 20%));
+}
+
+.product-showcase-content-col {
+  order: 1;
+}
+
+.product-showcase-content-col h3 {
+  position: relative;
+  display: inline-block;
+  margin: 0 0 20px;
+  padding-bottom: 12px;
+}
+
+.product-showcase-content-col h3::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 48px;
+  height: 3px;
+  background-color: var(--color-primary);
+  border-radius: 2px;
+}
+
+.product-showcase-content-col ul {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product-showcase-content-col li {
+  position: relative;
+  padding-left: 24px;
+  font-size: var(--body-font-size-s);
+}
+
+.product-showcase-content-col li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+}
+
+.product-showcase-content-col .button-wrapper {
+  margin: 0;
+}
+
+@media (width >= 900px) {
+  .product-showcase > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 64px;
+    padding: 64px 0;
+  }
+
+  .product-showcase-img-col,
+  .product-showcase-content-col {
+    order: unset;
+  }
+
+  .product-showcase-row-reverse .product-showcase-img-col {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .product-showcase-row-reverse .product-showcase-content-col {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+
+/* dark/highlight section support */
+main .section.highlight .product-showcase > div:not(:last-child),
+main .section.light .product-showcase > div:not(:last-child) {
+  border-bottom-color: rgb(255 255 255 / 15%);
+}

@@ -1,0 +1,89 @@
+.features-grid-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.features-grid-item {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 32px 28px;
+  border: 1px solid var(--color-accent);
+  border-radius: 16px;
+  background-color: var(--background-color);
+  color: currentcolor;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.features-grid-item:hover,
+.features-grid-item:focus-within {
+  transform: translateY(-4px);
+  border-color: var(--color-primary);
+  box-shadow: 0 16px 40px rgb(0 180 216 / 20%);
+}
+
+.features-grid-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background-color: rgb(0 180 216 / 10%);
+  color: var(--color-primary);
+}
+
+.features-grid-icon svg {
+  width: 28px;
+  height: 28px;
+  stroke: currentcolor;
+  fill: none;
+}
+
+.features-grid-body h3 {
+  margin: 0 0 8px;
+  font-size: var(--heading-font-size-s);
+}
+
+.features-grid-body p {
+  margin: 0;
+  font-size: var(--body-font-size-s);
+  color: currentcolor;
+  opacity: 0.85;
+}
+
+/* scroll-reveal */
+.features-grid-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.features-grid-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* on dark/highlight sections, keep card surface readable */
+main .section.highlight .features-grid-item,
+main .section.light .features-grid-item {
+  background-color: var(--background-color);
+}
+
+@media (width >= 600px) {
+  .features-grid-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 900px) {
+  .features-grid-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+}

@@ -1,9 +1,16 @@
 /* header and nav layout */
 header .nav-wrapper {
-  background-color: var(--background-color);
+  background-color: transparent;
   width: 100%;
   z-index: 2;
   position: fixed;
+  top: 0;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+header .nav-wrapper.nav-scrolled {
+  background-color: var(--dark-color);
+  box-shadow: 0 4px 24px rgb(0 0 0 / 25%);
 }
 
 header nav {
@@ -19,6 +26,7 @@ header nav {
   height: var(--nav-height);
   padding: 0 24px;
   font-family: var(--body-font-family);
+  color: var(--background-color);
 }
 
 header nav[aria-expanded='true'] {
@@ -28,11 +36,12 @@ header nav[aria-expanded='true'] {
     'tools tools' var(--nav-height) / auto 1fr;
   overflow-y: auto;
   min-height: 100dvh;
+  background-color: var(--dark-color);
 }
 
 @media (width >= 900px) {
   header .nav-wrapper {
-    position: relative;
+    position: fixed;
   }
 
   header nav {
@@ -46,6 +55,7 @@ header nav[aria-expanded='true'] {
   header nav[aria-expanded='true'] {
     min-height: 0;
     overflow: visible;
+    background-color: transparent;
   }
 }
 
@@ -72,7 +82,7 @@ header nav .nav-hamburger button {
   border: 0;
   border-radius: 0;
   padding: 0;
-  background-color: var(--background-color);
+  background-color: transparent;
   color: inherit;
   overflow: initial;
   text-overflow: initial;
@@ -142,15 +152,16 @@ header nav[aria-expanded='true'] .nav-hamburger-icon::after {
 /* brand */
 header .nav-brand {
   grid-area: brand;
-  flex-basis: 128px;
+  flex-basis: 140px;
   font-size: var(--heading-font-size-s);
   font-weight: 700;
   line-height: 1;
 }
 
 header nav .nav-brand img {
-  width: 128px;
+  width: 140px;
   height: auto;
+  display: block;
 }
 
 /* sections */
@@ -190,6 +201,8 @@ header nav .nav-sections ul > li > ul > li {
     display: block;
     visibility: visible;
     white-space: nowrap;
+    flex: 1;
+    text-align: center;
   }
 
   header nav[aria-expanded='true'] .nav-sections {
@@ -224,13 +237,20 @@ header nav .nav-sections ul > li > ul > li {
 
   header nav .nav-sections ul {
     display: flex;
-    gap: 24px;
+    justify-content: center;
+    gap: 32px;
     margin: 0;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li {
     flex: 0 1 auto;
     position: relative;
+    transition: color 0.2s ease;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li:hover,
+  header nav .nav-sections .default-content-wrapper > ul > li:focus-within {
+    color: var(--color-primary);
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul {
@@ -245,7 +265,10 @@ header nav .nav-sections ul > li > ul > li {
     width: 200px;
     top: 150%;
     padding: 16px;
-    background-color: var(--light-color);
+    background-color: var(--dark-color);
+    color: var(--background-color);
+    border-radius: 8px;
+    box-shadow: 0 12px 32px rgb(0 0 0 / 35%);
     white-space: initial;
   }
 
@@ -258,7 +281,7 @@ header nav .nav-sections ul > li > ul > li {
     height: 0;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
-    border-bottom: 8px solid var(--light-color);
+    border-bottom: 8px solid var(--dark-color);
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
@@ -269,4 +292,31 @@ header nav .nav-sections ul > li > ul > li {
 /* tools */
 header nav .nav-tools {
   grid-area: tools;
+}
+
+header nav .nav-tools .button {
+  font-size: var(--body-font-size-xs);
+  padding: 0.5em 1.4em;
+}
+
+/* mobile menu: solid indigo background + light text for legibility */
+@media (width < 900px) {
+  header nav .nav-sections a:any-link,
+  header nav .nav-sections li {
+    color: var(--background-color);
+  }
+
+  header nav[aria-expanded='true'] .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul {
+    background-color: rgb(255 255 255 / 6%);
+    border-radius: 8px;
+    padding: 8px 16px;
+  }
+
+  header nav[aria-expanded='true'] .nav-tools {
+    padding-bottom: 24px;
+  }
+
+  header nav[aria-expanded='true'] .nav-tools .button {
+    width: 100%;
+  }
 }

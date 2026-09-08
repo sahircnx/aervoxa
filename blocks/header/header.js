@@ -109,6 +109,34 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 }
 
 /**
+ * Toggles a class on the nav wrapper once the page has scrolled past a
+ * threshold, allowing the header to transition from a transparent overlay
+ * (over the hero) to a solid, elevated background.
+ * @param {Element} navWrapper The nav wrapper element
+ */
+function watchHeaderScroll(navWrapper) {
+  const SCROLL_THRESHOLD = 48;
+  let ticking = false;
+
+  const applyScrollState = () => {
+    const scrolled = window.scrollY > SCROLL_THRESHOLD;
+    navWrapper.classList.toggle('nav-scrolled', scrolled);
+    ticking = false;
+  };
+
+  const onScroll = () => {
+    if (!ticking) {
+      ticking = true;
+      window.requestAnimationFrame(applyScrollState);
+    }
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  // set initial state in case the page loads already scrolled
+  applyScrollState();
+}
+
+/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
@@ -168,4 +196,6 @@ export default async function decorate(block) {
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
   block.append(navWrapper);
+
+  watchHeaderScroll(navWrapper);
 }
