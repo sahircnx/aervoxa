@@ -1,3 +1,8 @@
+/* Dark premium panel card — adapted from the reference's photographic
+   service-card anatomy. No product photography is available for this
+   brand yet, so each card uses a Deep-Indigo gradient panel (instead of a
+   background photo) while keeping the icon badge + title + description +
+   footer-link silhouette and typography treatment from the reference. */
 .features-grid-list {
   list-style: none;
   margin: 0;
@@ -9,52 +14,124 @@
 
 .features-grid-item {
   box-sizing: border-box;
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 32px 28px;
-  border: 1px solid var(--color-accent);
-  border-radius: 16px;
-  background-color: var(--background-color);
-  color: currentcolor;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  border-radius: 20px;
+  background: linear-gradient(160deg, var(--dark-color) 0%, var(--dark-color-elevated) 100%);
+  color: var(--background-color);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* corner accent detail */
+.features-grid-item::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(0 180 216 / 35%) 0%, rgb(0 180 216 / 0%) 70%);
+  pointer-events: none;
 }
 
 .features-grid-item:hover,
 .features-grid-item:focus-within {
-  transform: translateY(-4px);
-  border-color: var(--color-primary);
-  box-shadow: 0 16px 40px rgb(0 180 216 / 20%);
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgb(0 180 216 / 25%);
 }
 
 .features-grid-icon {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 56px;
   height: 56px;
-  border-radius: 12px;
-  background-color: rgb(0 180 216 / 10%);
-  color: var(--color-primary);
+  border: 1px solid rgb(0 180 216 / 35%);
+  border-radius: 14px;
+  background-color: rgb(0 180 216 / 12%);
 }
 
 .features-grid-icon svg {
   width: 28px;
   height: 28px;
-  stroke: currentcolor;
+  stroke: var(--color-primary);
   fill: none;
+}
+
+.features-grid-icon img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.features-grid-body {
+  position: relative;
+  z-index: 1;
 }
 
 .features-grid-body h3 {
   margin: 0 0 8px;
+  color: var(--background-color);
   font-size: var(--heading-font-size-s);
 }
 
 .features-grid-body p {
   margin: 0;
   font-size: var(--body-font-size-s);
-  color: currentcolor;
-  opacity: 0.85;
+  color: var(--color-accent);
+}
+
+.features-grid-footer {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.features-grid-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: var(--body-font-size-s);
+  text-decoration: none;
+}
+
+.features-grid-link::after {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background-color: var(--color-primary);
+  -webkit-mask-image: url('/assets/icons/arrow-diagonal.svg');
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-image: url('/assets/icons/arrow-diagonal.svg');
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  transition: transform 0.2s ease;
+}
+
+.features-grid-link:hover,
+.features-grid-link:focus-visible {
+  color: var(--color-accent-cyan);
+  text-decoration: underline;
+}
+
+.features-grid-link:hover::after,
+.features-grid-link:focus-visible::after {
+  transform: translate(2px, -2px);
+  background-color: var(--color-accent-cyan);
 }
 
 /* scroll-reveal */
@@ -69,10 +146,11 @@
   transform: translateY(0);
 }
 
-/* on dark/highlight sections, keep card surface readable */
+/* the dark panels read fine on both default and light/highlight sections
+   since the card itself always carries its own dark background */
 main .section.highlight .features-grid-item,
 main .section.light .features-grid-item {
-  background-color: var(--background-color);
+  background: linear-gradient(160deg, var(--dark-color) 0%, var(--dark-color-elevated) 100%);
 }
 
 @media (width >= 600px) {

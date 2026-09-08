@@ -15,6 +15,7 @@
   --background-color: #FFFFFF; /* Crisp White */
   --light-color: #EEF1F5; /* Tinted Matte Silver, used for light section backgrounds */
   --dark-color: #0B132B; /* Deep Indigo / Midnight Blue */
+  --dark-color-elevated: #182548; /* lighter indigo, for gradients/elevated panels on dark cards */
   --text-color: #0B132B; /* Deep Indigo, used as default body text on light backgrounds */
   --link-color: #00B4D8; /* Arctic Blue */
   --link-hover-color: #48CAE4; /* supporting lighter cyan tint for hover/gradients */
@@ -28,8 +29,8 @@
   --color-accent-cyan: #48CAE4; /* lighter cyan tint for gradients/hover */
 
   /* fonts */
-  --body-font-family: 'Inter', 'roboto-fallback', sans-serif;
-  --heading-font-family: 'Space Grotesk', 'roboto-condensed-fallback', sans-serif;
+  --body-font-family: 'Instrument Sans', 'roboto-fallback', sans-serif;
+  --heading-font-family: 'Public Sans', 'roboto-condensed-fallback', sans-serif;
 
   /* body sizes */
   --body-font-size-m: 22px;
@@ -46,6 +47,12 @@
 
   /* nav height */
   --nav-height: 64px;
+
+  /* pill + circle button component (reference: Arctiq HVAC template) */
+  --button-pill-radius: 50px;
+  --button-circle-size: 52px;
+  --button-circle-overlap: -14px;
+  --button-circle-border-width: 2px;
 }
 
 /* fallback fonts */
@@ -173,31 +180,68 @@ a:hover {
   text-decoration: underline;
 }
 
-/* buttons */
+/* buttons: "pill + circle" component, per Arctiq reference anatomy.
+   The pill-shaped label (the <a>/<button> itself) is paired with a circular
+   arrow-icon chip rendered via ::after, overlapping the pill's right edge
+   via a negative margin. The arrow glyph is drawn with `mask` so its color
+   simply follows `background-color` on the ::after pseudo-element — no
+   filter hacks, no extra authored markup beyond the single link that
+   decorateButtons() already produces. */
 p.button-wrapper {
   margin: 12px 0;
+  display: inline-flex;
 }
 
 a.button:any-link,
 button.button {
   box-sizing: border-box;
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-height: var(--button-circle-size);
   max-width: 100%;
   margin: 0;
-  border: 2px solid transparent;
-  border-radius: 2.4em;
-  padding: 0.5em 1.2em;
+  border: var(--button-circle-border-width) solid transparent;
+  border-radius: var(--button-pill-radius);
+  padding: 13px 30px;
+  padding-right: calc(30px + var(--button-circle-size) + var(--button-circle-overlap));
   font: inherit;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1.25;
   text-decoration: none;
   cursor: pointer;
-  overflow: hidden;
+  overflow: visible;
   text-overflow: ellipsis;
   white-space: nowrap;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* the circular arrow "chip" riding on the pill's right edge */
+a.button:any-link::after,
+button.button::after {
+  content: '';
+  flex: none;
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: var(--button-circle-size);
+  height: var(--button-circle-size);
+  margin-right: var(--button-circle-overlap);
+  transform: translateY(-50%);
+  border: var(--button-circle-border-width) solid var(--dark-color);
+  border-radius: var(--button-pill-radius);
+  background-color: var(--dark-color);
+  -webkit-mask-image: url('/assets/icons/arrow-diagonal.svg');
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: 18px 18px;
+  mask-image: url('/assets/icons/arrow-diagonal.svg');
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 18px 18px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 a.button[aria-disabled="true"],
@@ -206,6 +250,7 @@ button.button:disabled {
   pointer-events: none;
 }
 
+/* primary: solid Arctic Blue pill, white circle w/ dark border + dark arrow */
 a.button.primary,
 button.button.primary {
   border-color: var(--color-primary);
@@ -213,13 +258,27 @@ button.button.primary {
   color: var(--background-color);
 }
 
+a.button.primary::after,
+button.button.primary::after {
+  border-color: var(--dark-color);
+  background-color: var(--dark-color);
+}
+
 a.button.primary:hover,
 a.button.primary:focus-visible,
 button.button.primary:hover,
 button.button.primary:focus-visible {
-  border-color: var(--color-accent-cyan);
-  background-color: var(--color-accent-cyan);
-  color: var(--dark-color);
+  border-color: var(--dark-color);
+  background-color: var(--dark-color);
+  color: var(--background-color);
+}
+
+a.button.primary:hover::after,
+a.button.primary:focus-visible::after,
+button.button.primary:hover::after,
+button.button.primary:focus-visible::after {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary);
 }
 
 a.button.primary[aria-disabled="true"],
@@ -233,11 +292,18 @@ button.button.primary:disabled:focus-visible {
   color: var(--dark-color);
 }
 
+/* secondary: white pill with dark text, dark circle w/ white arrow */
 a.button.secondary,
 button.button.secondary {
-  border-color: currentcolor;
-  background-color: transparent;
-  color: var(--text-color);
+  border-color: var(--background-color);
+  background-color: var(--background-color);
+  color: var(--dark-color);
+}
+
+a.button.secondary::after,
+button.button.secondary::after {
+  border-color: var(--dark-color);
+  background-color: var(--dark-color);
 }
 
 a.button.secondary:hover,
@@ -245,8 +311,16 @@ a.button.secondary:focus-visible,
 button.button.secondary:hover,
 button.button.secondary:focus-visible {
   border-color: var(--color-primary);
-  background-color: rgb(0 180 216 / 12%);
-  color: var(--color-primary);
+  background-color: var(--color-primary);
+  color: var(--background-color);
+}
+
+a.button.secondary:hover::after,
+a.button.secondary:focus-visible::after,
+button.button.secondary:hover::after,
+button.button.secondary:focus-visible::after {
+  border-color: var(--background-color);
+  background-color: var(--background-color);
 }
 
 a.button.secondary[aria-disabled="true"],
@@ -260,22 +334,36 @@ button.button.secondary:disabled:focus-visible {
   color: var(--dark-color);
 }
 
-/* high-impact call-to-action */
+/* high-impact call-to-action: same anatomy as primary, used for Buy Now etc. */
 a.button.accent,
 button.button.accent {
   border-color: var(--color-primary);
   background-color: var(--color-primary);
   color: var(--background-color);
-  font-weight: 600;
+  font-weight: 700;
+}
+
+a.button.accent::after,
+button.button.accent::after {
+  border-color: var(--dark-color);
+  background-color: var(--dark-color);
 }
 
 a.button.accent:hover,
 a.button.accent:focus-visible,
 button.button.accent:hover,
 button.button.accent:focus-visible {
-  border-color: var(--color-accent-cyan);
-  background-color: var(--color-accent-cyan);
-  color: var(--dark-color);
+  border-color: var(--dark-color);
+  background-color: var(--dark-color);
+  color: var(--background-color);
+}
+
+a.button.accent:hover::after,
+a.button.accent:focus-visible::after,
+button.button.accent:hover::after,
+button.button.accent:focus-visible::after {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary);
 }
 
 a.button.accent[aria-disabled="true"],

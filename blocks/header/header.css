@@ -185,7 +185,7 @@ header nav .nav-sections ul {
 }
 
 header nav .nav-sections ul > li {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 header nav .nav-sections ul > li > ul {
@@ -193,7 +193,7 @@ header nav .nav-sections ul > li > ul {
 }
 
 header nav .nav-sections ul > li > ul > li {
-  font-weight: 400;
+  font-weight: 500;
 }
 
 @media (width >= 900px) {
@@ -227,6 +227,7 @@ header nav .nav-sections ul > li > ul > li {
     border: 2px solid currentcolor;
     border-radius: 0 1px 0 0;
     border-width: 2px 2px 0 0;
+    transition: transform 0.2s ease;
   }
 
   header nav .nav-sections .nav-drop[aria-expanded='true']::after {
@@ -267,7 +268,7 @@ header nav .nav-sections ul > li > ul > li {
     padding: 16px;
     background-color: var(--dark-color);
     color: var(--background-color);
-    border-radius: 8px;
+    border-radius: 12px;
     box-shadow: 0 12px 32px rgb(0 0 0 / 35%);
     white-space: initial;
   }
@@ -289,14 +290,18 @@ header nav .nav-sections ul > li > ul > li {
   }
 }
 
-/* tools */
+/* tools: pill+circle "Buy Now" CTA, scaled down to fit the nav bar height */
 header nav .nav-tools {
   grid-area: tools;
 }
 
 header nav .nav-tools .button {
+  --button-circle-size: 36px;
+  --button-circle-overlap: -10px;
+
   font-size: var(--body-font-size-xs);
-  padding: 0.5em 1.4em;
+  padding: 9px 20px;
+  padding-right: calc(20px + var(--button-circle-size) + var(--button-circle-overlap));
 }
 
 /* mobile menu: solid indigo background + light text for legibility */

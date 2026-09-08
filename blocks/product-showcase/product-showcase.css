@@ -16,8 +16,8 @@
 
 .product-showcase-img-col img {
   width: 100%;
-  border-radius: 16px;
-  filter: drop-shadow(0 20px 40px rgb(0 180 216 / 20%));
+  border-radius: 20px;
+  filter: drop-shadow(0 20px 40px rgb(0 180 216 / 25%));
 }
 
 .product-showcase-content-col {
@@ -44,7 +44,7 @@
 
 .product-showcase-content-col ul {
   list-style: none;
-  margin: 0 0 24px;
+  margin: 0 0 28px;
   padding: 0;
   display: flex;
   flex-direction: column;

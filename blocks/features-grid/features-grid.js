@@ -1,11 +1,16 @@
 /**
  * Features Grid block.
  * Authored shape: one row (child div of the block) per feature, containing
- * exactly two child divs — the first holds the icon/media, the second holds
- * the title (as text, any heading/paragraph) followed by the description
- * paragraph. decorate() reshapes the row-divs into a semantic <ul>/<li>
- * grid with proper heading levels and wires up an optional stagger-reveal
- * animation on scroll.
+ * two or three child divs:
+ *   1. icon/media (an <img> referencing an icon svg)
+ *   2. text body: a heading (any level, normalized to <h3>) with the
+ *      feature title, followed by a description paragraph
+ *   3. OPTIONAL: a single paragraph containing one link — authored as a
+ *      plain link (not bold/italic-wrapped) — rendered as a "View Service"
+ *      style text link at the bottom of the card. If omitted, the card
+ *      simply has no footer link.
+ * decorate() reshapes the row-divs into a semantic <ul>/<li> grid of
+ * dark premium panels and wires up an optional stagger-reveal animation.
  * @param {Element} block The features-grid block element
  */
 export default function decorate(block) {
@@ -21,13 +26,20 @@ export default function decorate(block) {
       if (i === 0) {
         div.className = 'features-grid-icon';
         div.setAttribute('aria-hidden', 'true');
-      } else {
+      } else if (i === 1) {
         div.className = 'features-grid-body';
         const heading = div.querySelector('h1, h2, h3, h4, h5, h6');
         if (heading) {
           const h3 = document.createElement('h3');
           h3.append(...heading.childNodes);
           heading.replaceWith(h3);
+        }
+      } else {
+        div.className = 'features-grid-footer';
+        const link = div.querySelector('a');
+        if (link) {
+          link.classList.add('features-grid-link');
+          link.textContent = link.textContent.trim();
         }
       }
     });

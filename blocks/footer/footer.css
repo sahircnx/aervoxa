@@ -2,6 +2,7 @@ footer {
   background-color: var(--dark-color);
   color: var(--color-accent);
   font-size: var(--body-font-size-xs);
+  overflow: hidden;
 }
 
 footer a:any-link {
@@ -16,31 +17,54 @@ footer a:focus-visible {
 footer .footer > div {
   margin: auto;
   max-width: 1200px;
-  padding: 56px 24px 24px;
+  padding: 56px 24px 0;
 }
 
 footer .footer p {
   margin: 0;
 }
 
-/* row 1: logo + tagline */
+/* row 1: logo + tagline + CTA + working hours */
 footer .footer > div > div:nth-child(1) img {
   width: 140px;
   height: auto;
   margin-bottom: 16px;
 }
 
-footer .footer > div > div:nth-child(1) p:last-child {
-  max-width: 360px;
+footer .footer > div > div:nth-child(1) > p:nth-of-type(2) {
+  max-width: 400px;
   color: var(--color-accent);
+  margin-bottom: 24px;
 }
 
-/* row 2: link columns */
+footer .footer > div > div:nth-child(1) .button-wrapper {
+  margin: 0 0 32px;
+}
+
+footer .footer > div > div:nth-child(1) p strong {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--background-color);
+  font-family: var(--heading-font-family);
+  font-size: var(--body-font-size-s);
+  font-weight: 600;
+}
+
+footer .footer > div > div:nth-child(1) ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* row 2: 3 link columns */
 footer .footer > div > div:nth-child(2) {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 32px;
-  margin-top: 40px;
+  margin-top: 48px;
 }
 
 footer .footer > div > div:nth-child(2) p strong {
@@ -60,15 +84,29 @@ footer .footer > div > div:nth-child(2) li {
   margin: 10px 0;
 }
 
-/* row 3: bottom bar */
+/* row 3: credential line + copyright bottom bar */
 footer .footer > div > div:nth-child(3) {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   margin-top: 48px;
   padding-top: 24px;
   border-top: 1px solid rgb(255 255 255 / 12%);
   font-size: var(--body-font-size-xs);
+}
+
+footer .footer > div > div:nth-child(3) p:first-child {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--background-color);
+  font-weight: 500;
+}
+
+footer .footer > div > div:nth-child(3) img {
+  width: 20px;
+  height: 20px;
+  flex: none;
 }
 
 footer .footer > div > div:nth-child(3) ul {
@@ -79,6 +117,37 @@ footer .footer > div > div:nth-child(3) ul {
   padding: 0;
 }
 
+/* row 4: infinite marquee ticker */
+footer .footer > div > div:nth-child(4) {
+  margin-top: 32px;
+  padding: 0;
+  border-top: 1px solid rgb(255 255 255 / 12%);
+  overflow: hidden;
+}
+
+footer .footer > div > div:nth-child(4) p {
+  display: inline-block;
+  white-space: nowrap;
+  padding: 16px 0;
+  color: var(--color-primary);
+  font-family: var(--heading-font-family);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  animation: footer-marquee 22s linear infinite;
+}
+
+@keyframes footer-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  footer .footer > div > div:nth-child(4) p {
+    animation: none;
+  }
+}
+
 @media (width >= 600px) {
   footer .footer > div > div:nth-child(2) {
     grid-template-columns: repeat(3, 1fr);
@@ -87,7 +156,14 @@ footer .footer > div > div:nth-child(3) ul {
 
 @media (width >= 900px) {
   footer .footer > div {
-    padding: 64px 32px 24px;
+    padding: 64px 32px 0;
+  }
+
+  footer .footer > div > div:nth-child(1) {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 32px;
+    align-items: start;
   }
 
   footer .footer > div > div:nth-child(3) {
