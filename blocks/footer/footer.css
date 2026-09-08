@@ -24,11 +24,22 @@ footer .footer p {
   margin: 0;
 }
 
-/* row 1: logo + tagline + CTA + working hours */
+/* row 1: wordmark + tagline + CTA + working hours */
 footer .footer > div > div:nth-child(1) img {
   width: 140px;
   height: auto;
   margin-bottom: 16px;
+}
+
+footer .footer > div > div:nth-child(1) h3 {
+  margin: 0 0 16px;
+  color: var(--background-color);
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-m);
+}
+
+footer .footer > div > div:nth-child(1) h3 a {
+  color: inherit;
 }
 
 footer .footer > div > div:nth-child(1) > p:nth-of-type(2) {

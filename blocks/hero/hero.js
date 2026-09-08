@@ -9,28 +9,33 @@
  *
  * Authoring contract (single row, single content cell), in order:
  *   1. a <picture> background image
- *   2. OPTIONAL eyebrow: a <p> whose only content is a small icon <img>
- *      followed by short label text — must be the first non-picture
- *      paragraph and must contain an <img>
+ *   2. OPTIONAL eyebrow: a short-label <p> before the <h1> — an icon <img>
+ *      inside it is optional (text-only eyebrows are supported too, since
+ *      not every DA-authored image survives the AEM image pipeline)
  *   3. the <h1> headline (wrap the accent phrase in <em> for two-tone color)
  *   4. the subtext <p>
  *   5. one or two single-link button paragraphs (decorateButtons contract)
- *   6. OPTIONAL trust checklist: a <ul> of short items, each <li> starting
- *      with an icon <img> followed by text
+ *   6. OPTIONAL trust checklist: a <ul> of short items — an icon <img> per
+ *      <li> is optional, same reasoning as the eyebrow
  * @param {Element} block The hero block element
  */
 export default function decorate(block) {
   const content = block.querySelector(':scope > div') || block;
 
-  // tag the eyebrow badge: the first <p> that contains an <img> and is not
-  // a button-wrapper (buttons are wrapped in strong/em, no bare <img>)
-  const firstParagraphs = [...content.querySelectorAll('p')];
-  const eyebrow = firstParagraphs.find((p) => p.querySelector('img') && !p.querySelector('a'));
+  // tag the eyebrow badge: the first <p> child that appears before the
+  // <h1> and is not a button-wrapper (buttons are wrapped in strong/em) —
+  // works whether or not it contains an icon <img>
+  const children = [...content.children];
+  const headingIndex = children.findIndex((el) => el.tagName === 'H1');
+  const eyebrow = headingIndex > -1
+    ? children.slice(0, headingIndex).find((el) => el.tagName === 'P' && !el.querySelector('a'))
+    : null;
   if (eyebrow) eyebrow.classList.add('hero-eyebrow');
 
-  // tag the trust checklist: a <ul> whose items each start with an <img>
+  // tag the trust checklist: the <ul> inside the hero content, if any —
+  // works whether or not each <li> contains an icon <img>
   const list = content.querySelector('ul');
-  if (list && list.querySelector('li img')) {
+  if (list) {
     list.classList.add('hero-trust-list');
   }
 
