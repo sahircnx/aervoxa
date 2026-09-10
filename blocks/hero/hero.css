@@ -1,4 +1,4 @@
-main .hero-container > div {
+main .hero-container>div {
   max-width: unset;
 }
 
@@ -21,8 +21,8 @@ main .hero-container .hero-wrapper {
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-.hero > div:first-child,
-.hero > div:first-child > div {
+.hero>div:first-child,
+.hero>div:first-child>div {
   height: 100%;
 }
 
@@ -35,7 +35,7 @@ main .hero-container .hero-wrapper {
   background-color: var(--black);
 }
 
-.hero.hero-multiple-images > div > div picture:first-of-type {
+.hero.hero-multiple-images>div>div picture:first-of-type {
   display: none;
 }
 
@@ -113,7 +113,7 @@ main .hero-container .hero-wrapper {
 }
 
 
-.hero.hero-multiple-images > div > div picture:first-of-type,
+.hero.hero-multiple-images>div>div picture:first-of-type,
 .hero-multiple-videos .video-wrapper:first-of-type,
 .hero-multiple-videos .hero-pause-button:first-of-type {
   display: none;
@@ -194,12 +194,12 @@ main .hero-container .hero-wrapper {
   font-weight: 500;
 }
 
-@media (width >= 768px) {
-  .hero.hero-multiple-images > div > div picture:first-of-type {
+@media (width >=768px) {
+  .hero.hero-multiple-images>div>div picture:first-of-type {
     display: block;
   }
 
-  .hero.hero-multiple-images > div > div picture:nth-of-type(2) {
+  .hero.hero-multiple-images>div>div picture:nth-of-type(2) {
     display: none;
   }
 
@@ -215,7 +215,7 @@ main .hero-container .hero-wrapper {
     right: 30px;
   }
 
-  .hero.hero-multiple-images > div > div picture:nth-of-type(2),
+  .hero.hero-multiple-images>div>div picture:nth-of-type(2),
   .hero-multiple-videos .video-wrapper:nth-of-type(2),
   .hero-multiple-videos .hero-pause-button:nth-of-type(2) {
     display: none;
@@ -266,7 +266,7 @@ main .hero-container .hero-wrapper {
   }
 }
 
-@media (width >= 1025px) {
+@media (width >=1025px) {
   .hero .hero-text-wrapper {
     max-width: 500px;
     padding: 0 0 0 40px;
@@ -292,7 +292,7 @@ main .hero-container .hero-wrapper {
   }
 }
 
-@media (width >= 1440px) {
+@media (width >=1440px) {
   .hero .hero-text-wrapper {
     max-width: 707px;
     padding: 0 0 0 100px;
@@ -436,7 +436,7 @@ main .hero-container .hero-wrapper {
   text-align: left;
 }
 
-@media (width >= 768px) {
+@media (width >=768px) {
   .hero.carousel .hero-text-wrapper {
     max-width: 560px;
     padding-left: 40px;
@@ -480,11 +480,4 @@ main .hero-container .hero-wrapper {
 
 .hero.carousel .hero-dot:hover {
   background: rgb(255 255 255 / 60%);
-}
-
-@media (width >= 768px) {
-  .hero.carousel .hero-dots {
-    left: 40px;
-    transform: none;
-  }
 }

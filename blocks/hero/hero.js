@@ -225,7 +225,7 @@ export default function decorate(block) {
     const textWrapper = document.createElement('div');
     textWrapper.classList.add('hero-text-wrapper', 'dark');
     textWrapper.append(...firstCell.querySelectorAll(':scope > *:not(.hero-carousel)'));
-    firstCell.append(textWrapper);
+    // firstCell.append(textWrapper);
     headings.forEach((h) => { h.classList.add('h1'); });
     links.forEach((link, index) => { link.classList.add(index ? 'secondary' : 'primary'); });
     return;
