@@ -16,6 +16,29 @@ import {
 } from './aem.js';
 import { customDecoreateIcons } from './decorate-icon-helper.js';
 
+/*
+ * The published site enforces `require-trusted-types-for 'script'` via the
+ * Content-Security-Policy in head.html. Without a registered policy the
+ * browser blocks every innerHTML / createContextualFragment assignment,
+ * which silently kills header, footer and fragment decoration. Register a
+ * pass-through default policy once, as early as possible, so the existing
+ * DOM-building code (all first-party, non-user content) keeps working.
+ */
+(() => {
+  const tt = window.trustedTypes;
+  if (tt && tt.createPolicy && !tt.defaultPolicy) {
+    try {
+      tt.createPolicy('default', {
+        createHTML: (html) => html,
+        createScriptURL: (url) => url,
+        createScript: (script) => script,
+      });
+    } catch (e) {
+      // policy may already exist (e.g. duplicate module eval); ignore
+    }
+  }
+})();
+
 function buildVideoBlock(main) {
   const videoLinks = [...main.querySelectorAll('a[href$=".mp4"]')];
 
