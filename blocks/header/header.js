@@ -262,8 +262,14 @@ export default async function decorate(block) {
         const link = navSection.querySelector('a');
         if (link) {
           const linkWrapper = link.parentElement;
-          navSection.append(link);
-          linkWrapper.remove();
+          // Only unwrap when the link sits inside an intermediate wrapper
+          // (e.g. <li><p><a></p></li>). For a flat <li><a> the wrapper IS
+          // the navSection itself, so removing it would delete the whole
+          // menu item — guard against that.
+          if (linkWrapper !== navSection) {
+            navSection.append(link);
+            linkWrapper.remove();
+          }
         }
       }
       navSection.addEventListener('click', (event) => {
