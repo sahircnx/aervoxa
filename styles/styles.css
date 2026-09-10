@@ -64,9 +64,25 @@
   --link-hover-color: var(--action-hover);
   --c-primary-white: var(--white);
   --button-color: var(--action-default);
-  --light-color: #eee;
-  --dark-color: #ccc;
+  --light-color: #f4f1ec;
+  --dark-color: #0b1f33;
   --text-color: #1d1d1b;
+
+  /* LG-inspired design system (Aervoxa) */
+  --page-bg: #f4f1ec;            /* warm off-white canvas */
+  --surface: #fff;               /* card surface */
+  --surface-muted: #f6f6f4;      /* subtle card tint */
+  --color-primary: var(--action-default);
+  --color-primary-hover: var(--action-hover);
+  --color-accent: #5b6470;       /* muted slate for supporting text */
+  --color-accent-cyan: #0a6ebd;  /* cooling blue accent */
+  --dark-color-elevated: #14314f;
+  --heading-font-size-s: 1.25rem;
+  --body-font-size-s: 0.9375rem;
+  --animation-time: 300ms;
+  --row-gap: 24px;
+  --card-radius: 16px;
+  --card-border: #e7e3db;
 }
 
 .dark {
@@ -97,7 +113,7 @@ body {
   font-family: var(--body-font-family);
   line-height: 1.5;
   color: var(--text-color);
-  background-color: var(--c-primary-white);
+  background-color: var(--page-bg);
   display: none;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "liga" off, "clig" off;
@@ -143,7 +159,7 @@ h2,
   font-style: normal;
   font-weight: 500;
   line-height: 140%;
-  letter-spacing: 0.25;
+  letter-spacing: 0.25px;
 }
 
 h3,
@@ -261,7 +277,7 @@ h6,
 }
 
 .font-caption {
-  font-size: 0.75;
+  font-size: 0.75rem;
   letter-spacing: 0.4px;
 }
 
@@ -446,6 +462,7 @@ button.secondary.small {
   padding: 3px 12px;
 }
 
+/* stylelint-disable no-descending-specificity */
 .dark a:any-link,
 .dark button {
   background-color: transparent;
@@ -461,6 +478,7 @@ button.secondary.small {
 .dark button.secondary {
   background-color: transparent;
 }
+/* stylelint-enable no-descending-specificity */
 
 .dark a.button.primary:hover,
 .dark button.primary:hover {
@@ -604,7 +622,7 @@ main .section.padding-bottom-0 {
 /* section metadata */
 main .section.light,
 main .section.highlight {
-  background-color: var(--light-color);
+  background-color: var(--surface);
 }
 
 /* heading with marker */

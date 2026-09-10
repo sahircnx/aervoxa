@@ -1,8 +1,9 @@
 footer {
-  background-color: var(--black);
-  color: var(--c-primary-white);
+  background-color: var(--surface);
+  color: var(--text-color);
   position: relative;
   padding: 0 20px;
+  border-top: 1px solid var(--card-border);
 }
 
 .footer .columns-container .columns-wrapper {
@@ -39,7 +40,7 @@ footer {
 }
 
 .footer .footer-column .font-small {
-  color: var(--grey-20);
+  color: var(--grey-60);
 }
 
 .footer .footer-list-item {
@@ -50,7 +51,7 @@ footer {
 
 .footer .footer-list-item a {
   border-bottom: 1px solid transparent;
-  color: var(--c-primary-white);
+  color: var(--grey-80);
   display: flex;
   gap: 15px;
   align-items: center;
@@ -60,7 +61,8 @@ footer {
 .footer .footer-list-item a:hover,
 .footer .footer-list-item a:focus,
 .footer .footer-list-item a:active {
-  border-bottom: 1px solid var(--c-primary-white);
+  color: var(--color-primary);
+  border-bottom: 1px solid var(--color-primary);
 }
 
 .footer .footer-list-item a:has(span.icon):hover,
@@ -147,7 +149,12 @@ footer {
 }
 
 .footer-wrapper {
-  border-top: 1px solid var(--white);
+  border-top: 1px solid var(--card-border);
+}
+
+/* legal bar text reads as muted grey, LG-style */
+.footer .footer-column:last-child .font-small {
+  color: var(--grey-60);
 }
 
 .footer-cs-wrapper {
@@ -189,13 +196,13 @@ footer {
 .footer-cs-country-name {
   display: inline-flex;
   align-items: center;
-  color: var(--c-primary-white);
+  color: var(--grey-80);
   line-height: 150%;
 }
 
 .footer-cs-button:any-link {
   padding-left: 0;
-  color: var(--c-primary-white);
+  color: var(--grey-80);
   display: inline-flex;
   align-items: center;
   gap: 10px;
