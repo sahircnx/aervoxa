@@ -1,30 +1,28 @@
-.hero-container .hero-wrapper {
+main .hero-container > div {
   max-width: unset;
+}
+
+main .hero-container {
+  padding: 0 0 var(--section-y-padding);
+}
+
+main .hero-container .hero-wrapper {
   padding: 0;
 }
 
 .hero {
   position: relative;
-  display: flex;
-  align-items: center;
-  min-height: 90vh;
-  padding: calc(var(--nav-height) + 40px) 24px 64px;
-  box-sizing: border-box;
-  overflow: hidden;
-  background-color: var(--dark-color);
+  height: 100vh;
 }
 
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: linear-gradient(
-    180deg,
-    rgb(11 19 43 / 85%) 0%,
-    rgb(11 19 43 / 55%) 45%,
-    rgb(11 19 43 / 88%) 100%
-  );
+.da-preview .hero {
+  height: 600px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.hero > div:first-child,
+.hero > div:first-child > div {
+  height: 100%;
 }
 
 .hero picture {
@@ -33,6 +31,11 @@
   inset: 0;
   object-fit: cover;
   box-sizing: border-box;
+  background-color: var(--black);
+}
+
+.hero.hero-multiple-images > div > div picture:first-of-type {
+  display: none;
 }
 
 .hero img {
@@ -41,137 +44,280 @@
   height: 100%;
 }
 
-.hero > div {
-  position: relative;
-  z-index: 1;
-  max-width: 820px;
-  margin: 0 auto;
-  text-align: center;
+.hero .video-wrapper {
+  margin: 0;
 }
 
-/* eyebrow badge: translucent dark pill above the headline */
-.hero p.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0 auto 24px;
-  padding: 8px 18px;
-  border: 1px solid rgb(255 255 255 / 20%);
-  border-radius: var(--button-pill-radius);
-  background-color: rgb(255 255 255 / 8%);
-  color: var(--background-color);
-  font-size: var(--body-font-size-xs);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  max-width: none;
-}
-
-.hero-eyebrow picture,
-.hero-eyebrow img {
-  display: inline-flex;
-  width: 16px;
-  height: 16px;
-}
-
-/* two-tone headline: the last <em> phrase authored inside the h1 renders
-   in the Arctic Blue accent color, the rest stays white */
-.hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
-  font-family: var(--heading-font-family);
-  letter-spacing: -0.01em;
-}
-
-.hero h1 em {
-  color: var(--color-primary);
-  font-style: normal;
-}
-
-.hero p {
-  color: var(--color-accent);
-  font-size: var(--body-font-size-m);
-  max-width: 620px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.hero p.button-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  margin-top: 32px;
-}
-
-.hero p.button-wrapper .button {
+.hero video {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  object-fit: cover;
   width: 100%;
-  max-width: 320px;
+  height: 100%;
 }
 
-/* trust-checklist row: three short items with a checkmark icon */
-.hero-trust-list {
-  list-style: none;
+.hero picture::after,
+.hero .video-wrapper::after {
+  background: var(--black);
+  content: "";
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  opacity: 0.3;
+  left: 0;
+}
+
+.hero .video-wrapper::after {
+  z-index: -1;
+}
+
+.hero span.icon {
   display: flex;
+}
+
+.hero .hero-text-wrapper {
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  width: 100%;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  margin: 40px auto 0;
-  padding: 0;
-  max-width: 560px;
-  text-align: left;
-}
-
-.hero-trust-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  color: var(--background-color);
-  font-size: var(--body-font-size-s);
+  height: 100%;
+  justify-content: center;
+  background-color: transparent;
+  font-size: 20px;
+  line-height: 28px;
   font-weight: 500;
 }
 
-.hero-trust-list picture,
-.hero-trust-list img {
-  flex: none;
-  display: inline-flex;
-  width: 22px;
-  height: 22px;
-  margin-top: 1px;
+.hero .button span {
+  display: flex;
 }
 
-/* scroll-reveal entrance animation */
-.hero-reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+.hero .hero-pause-button {
+  position: absolute;
+  right: 20px;
+  top: calc(var(--nav-height) + 24px);
+  width: 32px;
+  height: 32px;
+  border: solid 1px var(--white);
+  border-radius: 50%;
 }
 
-.hero-reveal-visible {
-  opacity: 1;
-  transform: translateY(0);
+.hero-multiple-videos .hero-pause-button:nth-of-type(2) {
+  top: calc(var(--nav-height) + 60px);
 }
 
-@media (width >= 900px) {
-  .hero {
-    padding: calc(var(--nav-height) + 64px) 32px 96px;
+
+.hero.hero-multiple-images > div > div picture:first-of-type,
+.hero-multiple-videos .video-wrapper:first-of-type,
+.hero-multiple-videos .hero-pause-button:first-of-type {
+  display: none;
+}
+
+.hero .hero-scroll-icon {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  bottom: 24px;
+  border: solid 1px var(--white);
+  width: 26px;
+  height: 40px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero .hero-scroll-icon span {
+  height: 20px;
+  width: 14px;
+}
+
+.hero h1 {
+  margin-bottom: 6px;
+}
+
+.hero p:not(:last-child) {
+  margin-bottom: 32px;
+}
+
+.hero p:last-child {
+  margin-bottom: 0;
+}
+
+.hero span.hidden {
+  display: none;
+}
+
+.hero .hero-flag {
+  translate: 20px -100%;
+  display: flex;
+  width: 60px;
+  height: 50px;
+  position: absolute;
+}
+
+.hero .hero-flag svg {
+  width: auto;
+  height: auto;
+}
+
+.hero .hero-countdown {
+  text-align: center;
+  line-height: 91px;
+  font-size: 70px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  margin: 32px 0 43px;
+  max-width: 320px;
+  align-self: center;
+  width: 100%;
+}
+
+.hero.countdown .hero-text-wrapper {
+  font-size: 24px;
+  line-height: 33.6px;
+  gap: 125px;
+}
+
+.hero .hero-countdown .hero-days-label,
+.hero .hero-countdown .hero-hours-label,
+.hero .hero-countdown .hero-minutes-label {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 500;
+}
+
+@media (width >= 768px) {
+  .hero.hero-multiple-images > div > div picture:first-of-type {
+    display: block;
   }
 
-  .hero p.button-wrapper {
-    flex-direction: row;
-    justify-content: center;
+  .hero.hero-multiple-images > div > div picture:nth-of-type(2) {
+    display: none;
   }
 
-  .hero p.button-wrapper .button {
-    width: auto;
-  }
-
-  .hero-trust-list {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    max-width: none;
+  .hero .hero-text-wrapper {
+    max-width: 475px;
     text-align: left;
+    padding: 0 0 0 30px;
+  }
+
+  .hero .hero-pause-button {
+    top: unset;
+    bottom: 30px;
+    right: 30px;
+  }
+
+  .hero.hero-multiple-images > div > div picture:nth-of-type(2),
+  .hero-multiple-videos .video-wrapper:nth-of-type(2),
+  .hero-multiple-videos .hero-pause-button:nth-of-type(2) {
+    display: none;
+  }
+
+  .hero-multiple-videos .hero-pause-button:first-of-type {
+    display: flex;
+  }
+
+  .hero .hero-flag {
+    translate: 30px -100%;
+  }
+
+  .hero.countdown .hero-text-wrapper {
+    max-width: 652px;
+    padding: 0;
+    margin: auto;
+    text-align: center;
+    font-size: 34px;
+    line-height: 47.6px;
+  }
+
+  .hero.countdown .button-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero .hero-countdown {
+    font-size: 160px;
+    line-height: 224px;
+    max-width: unset;
+    margin: 20px 0 64px;
+  }
+
+  .hero .hero-countdown .hero-days-label,
+  .hero .hero-countdown .hero-hours-label,
+  .hero .hero-countdown .hero-minutes-label {
+    font-size: 28px;
+    line-height: 36.4px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    translate: -50% 0;
+  }
+
+  .hero .hero-time {
+    position: relative;
+  }
+}
+
+@media (width >= 1025px) {
+  .hero .hero-text-wrapper {
+    max-width: 500px;
+    padding: 0 0 0 40px;
+  }
+
+  .hero .hero-pause-button {
+    bottom: 24px;
+    right: 40px;
+  }
+
+  .hero .hero-flag {
+    translate: 40px -100%;
+    width: 100px;
+    height: auto;
+  }
+
+  .hero .hero-flag svg {
+    height: unset;
+  }
+
+  .hero h1 {
+    margin-bottom: 20px;
+  }
+}
+
+@media (width >= 1440px) {
+  .hero .hero-text-wrapper {
+    max-width: 707px;
+    padding: 0 0 0 100px;
+  }
+
+  .hero .hero-text-wrapper .h1 {
+    margin-bottom: 24px;
+  }
+
+  .hero .hero-pause-button {
+    right: 100px;
+  }
+
+  .hero .hero-flag {
+    translate: 62px -100%;
+  }
+
+  .hero h1 {
+    margin-bottom: 20px;
+  }
+
+  .hero.countdown p {
+    margin: 0;
+  }
+
+  .hero .hero-countdown {
+    margin-bottom: 80px;
   }
 }

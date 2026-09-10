@@ -1,0 +1,365 @@
+{
+    "data": {
+        "total": 1,
+        "offset": 0,
+        "limit": 1,
+        "data": [
+            {}
+        ]
+    },
+    "config": {
+        "total": 2,
+        "offset": 0,
+        "limit": 2,
+        "data": [
+            {
+                "key": "heading",
+                "value": "Choose your country"
+            },
+            {
+                "key": "image",
+                "value": "/media/media_1d9965dc0f93abd48e43280aa7ed273f5d9dc8d9c.png"
+            }
+        ]
+    },
+    "countries": {
+        "total": 20,
+        "offset": 0,
+        "limit": 20,
+        "data": [
+            {
+                "region": "Europe",
+                "country": "italy",
+                "icon": "bimota-italy--png",
+                "path": "/"
+            },
+            {
+                "region": "Europe",
+                "country": "italy",
+                "icon": "bimota-italy--png",
+                "path": "/"
+            },
+            {
+                "region": "Europe",
+                "country": "spain",
+                "icon": "bimota-spain--png",
+                "path": "/"
+            },
+            {
+                "region": "Europe",
+                "country": "spain",
+                "icon": "bimota-spain--png",
+                "path": "/"
+            },
+            {
+                "region": "Europe",
+                "country": "uk",
+                "icon": "bimota-uk--png",
+                "path": "/"
+            },
+            {
+                "region": "Europe",
+                "country": "france",
+                "icon": "bimota-france--png",
+                "path": "/"
+            },
+            {
+                "region": "Europe",
+                "country": "france",
+                "icon": "bimota-france--png",
+                "path": "/"
+            },
+            {
+                "region": "Europe",
+                "country": "germany",
+                "icon": "bimota-germany--png",
+                "path": "/"
+            },
+            {
+                "region": "Europe",
+                "country": "germany",
+                "icon": "bimota-germany--png",
+                "path": "/"
+            },
+            {
+                "region": "Europe",
+                "country": "netherlands",
+                "icon": "bimota-dutch--png",
+                "path": "/"
+            },
+            {
+                "region": "Europe",
+                "country": "netherlands",
+                "icon": "bimota-dutch--png",
+                "path": "/"
+            },
+            {
+                "region": "Europe",
+                "country": "belgium",
+                "icon": "bimota-belgium--png",
+                "path": "/"
+            },
+            {
+                "region": "Europe",
+                "country": "belgium",
+                "icon": "bimota-belgium--png",
+                "path": "/"
+            },
+            {
+                "region": "Europe",
+                "country": "belgium",
+                "icon": "bimota-belgium--png",
+                "path": "/"
+            },
+            {
+                "region": "Europe",
+                "country": "luxembourg",
+                "icon": "bimota-lux--png",
+                "path": "/"
+            },
+            {
+                "region": "Europe",
+                "country": "luxembourg",
+                "icon": "bimota-lux--png",
+                "path": "/"
+            },
+            {
+                "region": "Asia",
+                "country": "japan",
+                "icon": "bimota-japan--png",
+                "path": "/"
+            },
+            {
+                "region": "Asia",
+                "country": "philippines",
+                "icon": "bimota-ph--png",
+                "path": "/"
+            },
+            {
+                "region": "Asia",
+                "country": "china",
+                "icon": "bimota-china--png",
+                "path": "/"
+            },
+            {
+                "region": "Oceania",
+                "country": "australia",
+                "icon": "bimota-australia--png",
+                "path": "/"
+            }
+        ]
+    },
+    "country-names": {
+        "total": 14,
+        "offset": 0,
+        "limit": 14,
+        "data": [
+            {
+                "country": "italy",
+                "en": "Italy",
+                "it": "Italia",
+                "es": "Italia",
+                "fr": "Italie",
+                "de": "Italien",
+                "nl": "Italië",
+                "ja": "イタリア"
+            },
+            {
+                "country": "spain",
+                "en": "Spain",
+                "it": "Spagna",
+                "es": "España",
+                "fr": "Espagne",
+                "de": "Spanien",
+                "nl": "Spanje",
+                "ja": "スペイン"
+            },
+            {
+                "country": "uk",
+                "en": "United Kingdom",
+                "it": "Regno Unito",
+                "es": "Reino Unido",
+                "fr": "Royaume-Uni",
+                "de": "Vereinigtes Königreich",
+                "nl": "Verenigd Koninkrijk",
+                "ja": "イギリス"
+            },
+            {
+                "country": "france",
+                "en": "France",
+                "it": "Francia",
+                "es": "Francia",
+                "fr": "France",
+                "de": "Frankreich",
+                "nl": "Frankrijk",
+                "ja": "フランス"
+            },
+            {
+                "country": "germany",
+                "en": "Germany",
+                "it": "Germania",
+                "es": "Alemania",
+                "fr": "Allemagne",
+                "de": "Deutschland",
+                "nl": "Duitsland",
+                "ja": "ドイツ"
+            },
+            {
+                "country": "netherlands",
+                "en": "Netherlands",
+                "it": "Paesi Bassi",
+                "es": "Países Bajos",
+                "fr": "Pays-Bas",
+                "de": "Niederlande",
+                "nl": "Nederland",
+                "ja": "オランダ"
+            },
+            {
+                "country": "belgium",
+                "en": "Belgium",
+                "it": "Belgio",
+                "es": "Bélgica",
+                "fr": "Belgique",
+                "de": "Belgien",
+                "nl": "België",
+                "ja": "ベルギー"
+            },
+            {
+                "country": "luxembourg",
+                "en": "Luxembourg",
+                "it": "Lussemburgo",
+                "es": "Luxemburgo",
+                "fr": "Luxembourg",
+                "de": "Luxemburg",
+                "nl": "Luxemburg",
+                "ja": "ルクセンブルク"
+            },
+            {
+                "country": "japan",
+                "en": "Japan",
+                "it": "Giappone",
+                "es": "Japón",
+                "fr": "Japon",
+                "de": "Japan",
+                "nl": "Japan",
+                "ja": "日本"
+            },
+            {
+                "country": "philippines",
+                "en": "Philippines",
+                "it": "Filippine",
+                "es": "Filipinas",
+                "fr": "Philippines",
+                "de": "Philippinen",
+                "nl": "Filipijnen",
+                "ja": "フィリピン"
+            },
+            {
+                "country": "australia",
+                "en": "Australia",
+                "it": "Australia",
+                "es": "Australia",
+                "fr": "Australie",
+                "de": "Australien",
+                "nl": "Australië",
+                "ja": "オーストラリア"
+            },
+            {
+                "country": "america",
+                "en": "United States",
+                "it": "Stati Uniti",
+                "es": "Estados Unidos",
+                "fr": "États-Unis",
+                "de": "Vereinigte Staaten",
+                "nl": "Verenigde Staten",
+                "ja": "アメリカ合衆国"
+            },
+            {
+                "country": "canada",
+                "en": "Canada",
+                "it": "Canada",
+                "es": "Canadá",
+                "fr": "Canada",
+                "de": "Kanada",
+                "nl": "Canada",
+                "ja": "カナダ"
+            },
+            {
+                "country": "china",
+                "en": "China",
+                "it": "Cina",
+                "es": "China",
+                "fr": "Chine",
+                "de": "China",
+                "nl": "China",
+                "ja": "中国"
+            }
+        ]
+    },
+    "translations": {
+        "total": 5,
+        "offset": 0,
+        "limit": 5,
+        "data": [
+            {
+                "key": "Choose your country",
+                "en": "Choose your country",
+                "it": "Scegli il tuo paese",
+                "es": "Elige tu país",
+                "fr": "Choisissez votre pays",
+                "de": "Wählen Sie Ihr Land",
+                "nl": "Kies uw land",
+                "ja": "国を選択してください"
+            },
+            {
+                "key": "Europe",
+                "en": "Europe",
+                "it": "Europa",
+                "es": "Europa",
+                "fr": "Europe",
+                "de": "Europa",
+                "nl": "Europa",
+                "ja": "ヨーロッパ"
+            },
+            {
+                "key": "Asia",
+                "en": "Asia",
+                "it": "Asia",
+                "es": "Asia",
+                "fr": "Asie",
+                "de": "Asien",
+                "nl": "Azië",
+                "ja": "アジア"
+            },
+            {
+                "key": "Oceania",
+                "en": "Oceania",
+                "it": "Oceania",
+                "es": "Oceanía",
+                "fr": "Océanie",
+                "de": "Ozeanien",
+                "nl": "Oceanië",
+                "ja": "オセアニア"
+            },
+            {
+                "key": "North America",
+                "en": "North America",
+                "it": "Nord America",
+                "es": "América del Norte",
+                "fr": "Amérique du Nord",
+                "de": "Nordamerika",
+                "nl": "Noord-Amerika",
+                "ja": "北米"
+            }
+        ]
+    },
+    ":version": 3,
+    ":names": [
+        "data",
+        "config",
+        "countries",
+        "country-names",
+        "translations"
+    ],
+    ":type": "multi-sheet"
+}

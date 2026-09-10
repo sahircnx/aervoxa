@@ -1,14 +1,16 @@
-import { getMetadata } from '../../scripts/aem.js';
+import { getMetadata, getRootPath } from '../../scripts/aem.js';
+import { addAnimateInOut } from '../../scripts/modal-helper.js';
+import { customDecoreateIcons } from '../../scripts/decorate-icon-helper.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 // media query match that indicates mobile/tablet width
-const isDesktop = window.matchMedia('(min-width: 900px)');
+const isDesktop = window.matchMedia('(min-width: 1025px)');
+const fadeTransitionTime = 300;
 
 function closeOnEscape(e) {
   if (e.code === 'Escape') {
     const nav = document.getElementById('nav');
     const navSections = nav.querySelector('.nav-sections');
-    if (!navSections) return;
     const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
     if (navSectionExpanded && isDesktop.matches) {
       // eslint-disable-next-line no-use-before-define
@@ -18,22 +20,6 @@ function closeOnEscape(e) {
       // eslint-disable-next-line no-use-before-define
       toggleMenu(nav, navSections);
       nav.querySelector('button').focus();
-    }
-  }
-}
-
-function closeOnFocusLost(e) {
-  const nav = e.currentTarget;
-  if (!nav.contains(e.relatedTarget)) {
-    const navSections = nav.querySelector('.nav-sections');
-    if (!navSections) return;
-    const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
-    if (navSectionExpanded && isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleAllNavSections(navSections, false);
-    } else if (!isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleMenu(nav, navSections, false);
     }
   }
 }
@@ -59,7 +45,6 @@ function focusNavSection() {
  * @param {Boolean} expanded Whether the element should be expanded or collapsed
  */
 function toggleAllNavSections(sections, expanded = false) {
-  if (!sections) return;
   sections.querySelectorAll('.nav-sections .default-content-wrapper > ul > li').forEach((section) => {
     section.setAttribute('aria-expanded', expanded);
   });
@@ -76,66 +61,127 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   const button = nav.querySelector('.nav-hamburger button');
   document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-  toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
+  toggleAllNavSections(navSections, false);
   button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
   // enable nav dropdown keyboard accessibility
-  if (navSections) {
-    const navDrops = navSections.querySelectorAll('.nav-drop');
-    if (isDesktop.matches) {
-      navDrops.forEach((drop) => {
-        if (!drop.hasAttribute('tabindex')) {
-          drop.setAttribute('tabindex', 0);
-          drop.addEventListener('focus', focusNavSection);
-        }
-      });
-    } else {
-      navDrops.forEach((drop) => {
-        drop.removeAttribute('tabindex');
-        drop.removeEventListener('focus', focusNavSection);
-      });
+  const navDrops = navSections.querySelectorAll('.nav-drop');
+  navDrops.forEach((drop) => {
+    if (!drop.hasAttribute('tabindex')) {
+      drop.setAttribute('role', 'button');
+      drop.setAttribute('tabindex', 0);
+      drop.addEventListener('focus', focusNavSection);
     }
+  });
+
+  const backdropEl = nav.querySelector('.nav-backdrop');
+  if (!expanded) {
+    backdropEl.classList.remove('hide');
+  } else {
+    backdropEl.classList.add('hide');
+  }
+
+  if (document.querySelector('header nav .nav-link-section')) {
+    const animateTarget = document.querySelector('header nav .nav-link-section');
+    const animationConfig = {
+      initStyles: { display: 'flex' },
+      startStyles: { right: '-320px' },
+      endStyles: { right: '0' },
+      time: fadeTransitionTime,
+    };
+    const animateInOut = addAnimateInOut(animateTarget, animationConfig);
+    animateInOut(!expanded);
   }
 
   // enable menu collapse on escape keypress
   if (!expanded || isDesktop.matches) {
     // collapse menu on escape press
     window.addEventListener('keydown', closeOnEscape);
-    // collapse menu on focus lost
-    nav.addEventListener('focusout', closeOnFocusLost);
   } else {
     window.removeEventListener('keydown', closeOnEscape);
-    nav.removeEventListener('focusout', closeOnFocusLost);
   }
 }
 
-/**
- * Toggles a class on the nav wrapper once the page has scrolled past a
- * threshold, allowing the header to transition from a transparent overlay
- * (over the hero) to a solid, elevated background.
- * @param {Element} navWrapper The nav wrapper element
- */
-function watchHeaderScroll(navWrapper) {
-  const SCROLL_THRESHOLD = 48;
-  let ticking = false;
+function toggleSubNav(navSection, navSections) {
+  const expanded = navSection.getAttribute('aria-expanded') === 'true';
+  const navSublist = navSection.querySelector('.nav-sublist');
+  toggleAllNavSections(navSections);
 
-  const applyScrollState = () => {
-    const scrolled = window.scrollY > SCROLL_THRESHOLD;
-    navWrapper.classList.toggle('nav-scrolled', scrolled);
-    ticking = false;
+  if (expanded) {
+    document.body.style.overflow = '';
+    navSublist.classList.remove('subnav-fadein');
+  } else {
+    document.querySelector('header').classList.remove('transparent');
+
+    setTimeout(() => {
+      navSublist.classList.add('subnav-fadein');
+    }, 0);
+    document.body.style.overflow = 'hidden';
+  }
+
+  const animationConfig = {
+    initStyles: { display: 'grid' },
+    startStyles: { gridTemplateRows: '0fr' },
+    endStyles: { gridTemplateRows: '1fr' },
+    time: fadeTransitionTime,
   };
+  const animateInOut = addAnimateInOut(navSublist, animationConfig);
 
-  const onScroll = () => {
-    if (!ticking) {
-      ticking = true;
-      window.requestAnimationFrame(applyScrollState);
+  animateInOut(!expanded);
+  navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+}
+
+function checkForActiveLink(navSections) {
+  navSections.querySelectorAll(':scope .default-content-wrapper a').forEach((link) => {
+    const href = link.getAttribute('href');
+    if (window.location.pathname.includes(href)) {
+      const navParent = link.closest('.nav-drop');
+      navParent?.classList.add('active');
+      link.classList.add('active');
+    }
+  });
+}
+
+function handleTransparentAndScrolling(nav) {
+  const useTransparentVariant = !!document.querySelector('main > .section:first-child > .hero-wrapper:first-child');
+  const header = nav.closest('header');
+  let prevScrollingPosition = 0;
+
+  const changeToTransparentIfNeeded = (scrollY) => {
+    if (useTransparentVariant) {
+      header.classList.add('transparent', 'can-be-transparent');
+
+      if (scrollY > 100) {
+        header.classList.remove('transparent');
+      } else {
+        header.classList.add('transparent');
+      }
     }
   };
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  // set initial state in case the page loads already scrolled
-  applyScrollState();
+  document.addEventListener('scroll', () => {
+    const { scrollY } = window;
+
+    changeToTransparentIfNeeded(scrollY);
+
+    if (scrollY - prevScrollingPosition > 0 && scrollY > 200) {
+      header.classList.add('fade-out');
+    } else if (prevScrollingPosition - scrollY > 0) {
+      header.classList.remove('fade-out');
+    }
+
+    prevScrollingPosition = scrollY;
+  });
+
+  changeToTransparentIfNeeded(window.scrollY);
 }
 
+// loading country selector of modal as part of header
+async function loadCountrySelectorBlock() {
+  const main = document.querySelector('main');
+  const fragment = await loadFragment('/index');
+
+  while (fragment.firstElementChild) main.append(fragment.firstElementChild);
+}
 /**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
@@ -143,7 +189,8 @@ function watchHeaderScroll(navWrapper) {
 export default async function decorate(block) {
   // load nav as fragment
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
+  // const navPath = navMeta ? new URL(navMeta, window.location).pathname : `${getRootPath()}/nav`;
+  const navPath = `/nav`;
   const fragment = await loadFragment(navPath);
 
   // decorate nav DOM
@@ -152,7 +199,7 @@ export default async function decorate(block) {
   nav.id = 'nav';
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
-  const classes = ['brand', 'sections', 'tools'];
+  const classes = ['brand', 'sections', 'tools', 'dealer-locator'];
   classes.forEach((c, i) => {
     const section = nav.children[i];
     if (section) section.classList.add(`nav-${c}`);
@@ -166,36 +213,145 @@ export default async function decorate(block) {
   }
 
   const navSections = nav.querySelector('.nav-sections');
+
   if (navSections) {
     navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-      if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-      navSection.addEventListener('click', () => {
-        if (isDesktop.matches) {
-          const expanded = navSection.getAttribute('aria-expanded') === 'true';
-          toggleAllNavSections(navSections);
-          navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      const sublist = navSection.querySelector('ul');
+      if (sublist) {
+        const textWrapper = document.createElement('a');
+        textWrapper.classList.add('nav-drop-text');
+        textWrapper.innerHTML += '<span class="icon icon-chevron"></span>';
+        textWrapper.prepend(navSection.firstElementChild.innerHTML);
+        navSection.firstElementChild.remove();
+        navSection.prepend(textWrapper);
+        navSection.classList.add('nav-drop');
+
+        navSection.querySelectorAll('p').forEach((item) => {
+          const parentEle = item.parentElement;
+          parentEle.append(...item.children);
+          item.remove();
+        });
+
+        // wrapping pictures with links if the link follows immediately after the picture
+        navSection.querySelectorAll('ul picture + a').forEach((link) => {
+          const pictures = link.parentElement.querySelectorAll('picture');
+
+          if (pictures.length === 2) {
+            link.classList.add('swipe-on-hover');
+          }
+
+          link.prepend(...pictures);
+        });
+
+        // setting transtion delay for every list item
+        navSection.querySelectorAll('ul li').forEach((li, index) => {
+          li.style.transitionDelay = `${fadeTransitionTime + index * 200}ms`;
+        });
+
+        const navSublist = document.createRange().createContextualFragment(`
+          <div class="nav-sublist">
+            <div>
+              <span>${textWrapper.textContent}</span>
+              ${sublist.outerHTML}
+            </div>
+          </div>
+        `).children[0];
+
+        sublist.replaceWith(navSublist);
+      } else {
+        const link = navSection.querySelector('a');
+        if (link) {
+          const linkWrapper = link.parentElement;
+          navSection.append(link);
+          linkWrapper.remove();
+        }
+      }
+      navSection.addEventListener('click', (event) => {
+        if (
+          event.target.classList.contains('nav-drop-text')
+          || event.target.classList.contains('nav-drop')
+          || event.target.closest('.nav-drop-text')) {
+          toggleSubNav(navSection, navSections);
         }
       });
     });
   }
 
+  const navTools = nav.querySelector('.nav-tools');
+  if (navTools) {
+    const toolsWrapper = navTools.querySelector('ul');
+    toolsWrapper.classList.add('default-content-wrapper');
+    navTools.append(toolsWrapper);
+    navTools.firstElementChild.remove();
+
+    const globeIcon = navTools.querySelector('.icon-globe');
+    if (globeIcon) {
+      const textWrapper = document.createElement('span');
+      textWrapper.textContent = globeIcon.nextSibling.textContent;
+      globeIcon.nextSibling.remove();
+      textWrapper.classList.add('nav-tools-text');
+      globeIcon.parentElement.append(textWrapper);
+
+      globeIcon.addEventListener('click', (event) => {
+        event.preventDefault();
+        const modalEvent = new CustomEvent('show-modal', { detail: 'modal-country-selector' });
+        window.dispatchEvent(modalEvent);
+      });
+      loadCountrySelectorBlock();
+    }
+  }
+
+  if (navSections && navTools) {
+    const navLinksWrapper = document.createElement('div');
+    navLinksWrapper.classList.add('nav-link-section');
+    const flagEl = document.createElement('span');
+    flagEl.classList.add('nav-flag');
+    flagEl.innerHTML = '<span class="icon icon-logo-flag-black"></span>';
+    const closeEl = document.createElement('button');
+    closeEl.classList.add('nav-close-button');
+    closeEl.innerHTML = '<span class="icon icon-close"></span>';
+    closeEl.addEventListener('click', () => toggleMenu(nav, navSections));
+    navLinksWrapper.append(closeEl, navSections, navTools, flagEl);
+    nav.append(navLinksWrapper);
+
+    const backdrop = document.createElement('div');
+    backdrop.classList.add('nav-backdrop');
+    nav.append(backdrop);
+  }
+
+  const navDealerLocator = nav.querySelector('.nav-dealer-locator');
+  if (navDealerLocator) {
+    const dealerLocatorButton = navDealerLocator.querySelector('a');
+    navDealerLocator.innerHTML = '';
+    navDealerLocator.append(dealerLocatorButton);
+    nav.append(navDealerLocator);
+  }
+
   // hamburger for mobile
-  const hamburger = document.createElement('div');
-  hamburger.classList.add('nav-hamburger');
-  hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
-      <span class="nav-hamburger-icon"></span>
-    </button>`;
-  hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
-  nav.prepend(hamburger);
-  nav.setAttribute('aria-expanded', 'false');
-  // prevent mobile nav behavior on window resize
-  toggleMenu(nav, navSections, isDesktop.matches);
-  isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
+  if (navSections) {
+    const hamburger = document.createElement('div');
+    hamburger.classList.add('nav-hamburger');
+    hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
+        <span class="icon icon-hamburger"></span>
+      </button>`;
+    hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
+    nav.append(hamburger);
+    nav.setAttribute('aria-expanded', 'false');
+    // prevent mobile nav behavior on window resize
+    toggleMenu(nav, navSections, isDesktop.matches);
+    isDesktop.addEventListener('change', () => {
+      toggleMenu(nav, navSections, isDesktop.matches);
+    });
+  }
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
   block.append(navWrapper);
 
-  watchHeaderScroll(navWrapper);
+  if (navSections) {
+    checkForActiveLink(navSections);
+  }
+  handleTransparentAndScrolling(nav);
+  customDecoreateIcons(nav);
 }

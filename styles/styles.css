@@ -11,88 +11,97 @@
  */
 
 :root {
-  /* Aervoxa brand colors */
-  --background-color: #FFFFFF; /* Crisp White */
-  --light-color: #EEF1F5; /* Tinted Matte Silver, used for light section backgrounds */
-  --dark-color: #0B132B; /* Deep Indigo / Midnight Blue */
-  --dark-color-elevated: #182548; /* lighter indigo, for gradients/elevated panels on dark cards */
-  --text-color: #0B132B; /* Deep Indigo, used as default body text on light backgrounds */
-  --link-color: #00B4D8; /* Arctic Blue */
-  --link-hover-color: #48CAE4; /* supporting lighter cyan tint for hover/gradients */
-
-  /* brand specific */
-  --color-primary: #00B4D8; /* Arctic Blue */
-  --color-secondary: #0B132B; /* Deep Indigo */
-  --color-background: #FFFFFF; /* Crisp White */
-  --color-text: #0B132B; /* Deep Indigo */
-  --color-accent: #C4C9D1; /* Matte Silver */
-  --color-accent-cyan: #48CAE4; /* lighter cyan tint for gradients/hover */
-
   /* fonts */
-  --body-font-family: 'Instrument Sans', 'roboto-fallback', sans-serif;
-  --heading-font-family: 'Public Sans', 'roboto-condensed-fallback', sans-serif;
-
-  /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 19px;
-  --body-font-size-xs: 17px;
-
-  /* heading sizes */
-  --heading-font-size-xxl: 55px;
-  --heading-font-size-xl: 44px;
-  --heading-font-size-l: 34px;
-  --heading-font-size-m: 27px;
-  --heading-font-size-s: 24px;
-  --heading-font-size-xs: 22px;
+  --body-font-family: "Boxed", arial;
+  --heading-font-family: var(--body-font-family);
+  --body-font-size: 16px;
 
   /* nav height */
-  --nav-height: 64px;
+  --nav-height: 70px;
 
-  /* pill + circle button component (reference: Arctiq HVAC template) */
-  --button-pill-radius: 50px;
-  --button-circle-size: 52px;
-  --button-circle-overlap: -14px;
-  --button-circle-border-width: 2px;
+  /* section paddings */
+  --section-y-padding: 30px;
+  --section-x-padding: 20px;
+
+  /* grid gap */
+  --grid-gap: 16px;
+
+  /* v2 */
+  --white: #fff;
+  --grey-5: #f2f2f2;
+  --grey-10: #e6e6e6;
+  --grey-20: #ccc;
+  --grey-30: #b3b3b3;
+  --grey-40: #999;
+  --grey-50: #808080;
+  --grey-60: #666;
+  --grey-70: #4d4d4d;
+  --grey-80: #333;
+  --grey-90: #1a1a1a;
+  --black: #000;
+  --dark-red: #e3423d;
+  --action-default: #ed1c24;
+  --action-hover: #ae2d27;
+  --action-focus: #82221d;
+  --success: #2d9d78;
+  --warning: #e68619;
+  --error: #b81f2d;
+
+  /* z indexes */
+  --z-index-header: 2;
+
+  /* vehicle selector */
+  --vehicle-lineup-img-width: 60%;
+  --duration-medium: 240ms;
+  --easing-entrance: cubic-bezier(0, 0, 0.4, 1);
+  --easing-exit: cubic-bezier(0.2, 0, 1, 1);
+  --duration-small: 160ms;
+  --easing-standard: cubic-bezier(0.2, 0, 0.1, 1);
+
+  /* old variables */
+  --text-red: var(--action-default);
+  --link-color: var(--action-default);
+  --link-hover-color: var(--action-hover);
+  --c-primary-white: var(--white);
+  --button-color: var(--action-default);
+  --light-color: #eee;
+  --dark-color: #ccc;
+  --text-color: #1d1d1b;
 }
 
-/* fallback fonts */
-@font-face {
-  font-family: roboto-condensed-fallback;
-  size-adjust: 88.82%;
-  src: local('Arial');
+.dark {
+  background-color: var(--black);
+  color: var(--white);
 }
 
-@font-face {
-  font-family: roboto-fallback;
-  size-adjust: 99.529%;
-  src: local('Arial');
+:root .dark {
+  --action-default: #fff;
+  --action-hover: #bbb;
+  --action-focus: #999;
 }
 
-@media (width >= 900px) {
-  :root {
-    /* body sizes */
-    --body-font-size-m: 18px;
-    --body-font-size-s: 16px;
-    --body-font-size-xs: 14px;
+:root .homepage,
+:root .pdp {
+  --section-y-padding: 40px;
+}
 
-    /* heading sizes */
-    --heading-font-size-xxl: 45px;
-    --heading-font-size-xl: 36px;
-    --heading-font-size-l: 28px;
-    --heading-font-size-m: 22px;
-    --heading-font-size-s: 20px;
-    --heading-font-size-xs: 18px;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
-  display: none;
+  font-size: var(--body-font-size);
+  font-weight: 500;
+  letter-spacing: 0.44px;
   margin: 0;
-  background-color: var(--background-color);
-  color: var(--text-color);
   font-family: var(--body-font-family);
-  font-size: var(--body-font-size-m);
-  line-height: 1.6;
+  line-height: 1.5;
+  color: var(--text-color);
+  background-color: var(--c-primary-white);
+  display: none;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "liga" off, "clig" off;
+  overflow-x: hidden;
 }
 
 body.appear {
@@ -103,36 +112,173 @@ header {
   height: var(--nav-height);
 }
 
-header .header,
-footer .footer {
-  visibility: hidden;
-}
-
-header .header[data-block-status="loaded"],
-footer .footer[data-block-status="loaded"] {
-  visibility: visible;
-}
-
 h1,
 h2,
 h3,
 h4,
 h5,
-h6 {
-  margin-top: 0.8em;
-  margin-bottom: 0.25em;
-  font-family: var(--heading-font-family);
-  font-weight: 600;
-  line-height: 1.25;
-  scroll-margin: 40px;
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  margin-bottom: 20px;
+  margin-top: 0;
 }
 
-h1 { font-size: var(--heading-font-size-xxl); }
-h2 { font-size: var(--heading-font-size-xl); }
-h3 { font-size: var(--heading-font-size-l); }
-h4 { font-size: var(--heading-font-size-m); }
-h5 { font-size: var(--heading-font-size-s); }
-h6 { font-size: var(--heading-font-size-xs); }
+h1,
+.h1 {
+  font-size: 2.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 130%;
+  letter-spacing: 0;
+}
+
+h2,
+.h2 {
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  letter-spacing: 0.25;
+}
+
+h3,
+.h3 {
+  font-size: 1.75rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  letter-spacing: 0;
+}
+
+h4,
+.h4 {
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  letter-spacing: 0.15px;
+}
+
+h5,
+.h5 {
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 130%;
+  letter-spacing: 0.15px;
+}
+
+h6,
+.h6 {
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  letter-spacing: 0.15px;
+}
+
+@media (width >= 1025px) {
+  h1,
+  .h1 {
+    font-size: 3.75rem;
+  }
+
+  h2,
+  .h2 {
+    font-size: 2.5rem;
+  }
+
+  h3,
+  .h3 {
+    font-size: 2rem;
+  }
+
+  h4,
+  .h4 {
+    font-size: 1.75rem;
+  }
+
+  h5,
+  .h5 {
+    font-size: 1.5rem;
+  }
+
+  h6,
+  .h6 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (width >= 1440px) {
+  h1,
+  .h1 {
+    font-size: 4.375rem;
+    letter-spacing: -1.5px;
+    line-height: 120%;
+  }
+
+  h2,
+  .h2 {
+    font-size: 3rem;
+    letter-spacing: -0.5px;
+    line-height: 120%;
+  }
+
+  h3,
+  .h3 {
+    font-size: 2.5rem;
+    letter-spacing: 0;
+    line-height: 130%;
+  }
+
+  h4,
+  .h4 {
+    font-size: 2.125rem;
+    letter-spacing: 0.25px;
+  }
+
+  h5,
+  .h5 {
+    font-size: 1.75rem;
+    letter-spacing: 0;
+  }
+
+  h6,
+  .h6 {
+    font-size: 1.25rem;
+    letter-spacing: 0.15px;
+  }
+}
+
+.font-small {
+  font-size: 0.875rem;
+  letter-spacing: 0.25px;
+}
+
+.font-caption {
+  font-size: 0.75;
+  letter-spacing: 0.4px;
+}
+
+* + .h1,
+* + .h2,
+* + .h3,
+* + .h4,
+* + .h5,
+* + .h6,
+* + h1,
+* + h2,
+* + h3,
+* + h4,
+* + h5,
+* + h6 {
+  margin-top: 40px;
+}
 
 p,
 dl,
@@ -140,241 +286,207 @@ ol,
 ul,
 pre,
 blockquote {
-  margin-top: 0.8em;
-  margin-bottom: 0.25em;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
-code,
-pre {
-  font-size: var(--body-font-size-s);
+address,
+dl,
+fieldset,
+figure,
+ol,
+p,
+pre,
+ul {
+  margin: 0 0 20px;
+}
+
+ul {
+  padding: 0 30px;
+}
+
+code {
+  padding: 0.125em;
 }
 
 pre {
-  padding: 16px;
-  border-radius: 8px;
+  overflow: scroll;
+}
+
+main pre {
   background-color: var(--light-color);
+  padding: 1em;
+  border-radius: 0.25em;
   overflow-x: auto;
   white-space: pre;
 }
 
-main > div {
-  margin: 40px 16px;
-}
-
-input,
-textarea,
-select,
+/* buttons */
+a:any-link,
 button {
-  font: inherit;
-}
-
-/* links */
-a:any-link {
-  color: var(--link-color);
-  text-decoration: none;
-  overflow-wrap: break-word;
-}
-
-a:hover {
-  color: var(--link-hover-color);
-  text-decoration: underline;
-}
-
-/* buttons: "pill + circle" component, per Arctiq reference anatomy.
-   The pill-shaped label (the <a>/<button> itself) is paired with a circular
-   arrow-icon chip rendered via ::after, overlapping the pill's right edge
-   via a negative margin. The arrow glyph is drawn with `mask` so its color
-   simply follows `background-color` on the ::after pseudo-element — no
-   filter hacks, no extra authored markup beyond the single link that
-   decorateButtons() already produces. */
-p.button-wrapper {
-  margin: 12px 0;
-  display: inline-flex;
-}
-
-a.button:any-link,
-button.button {
+  font-family: var(--body-font-family);
   box-sizing: border-box;
-  position: relative;
+  text-decoration: none;
+  font-style: normal;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: var(--button-circle-size);
-  max-width: 100%;
-  margin: 0;
-  border: var(--button-circle-border-width) solid transparent;
-  border-radius: var(--button-pill-radius);
-  padding: 13px 30px;
-  padding-right: calc(30px + var(--button-circle-size) + var(--button-circle-overlap));
-  font: inherit;
-  font-weight: 700;
-  line-height: 1.25;
-  text-decoration: none;
-  cursor: pointer;
-  overflow: visible;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  gap: 8px;
+  flex-shrink: 0;
+  background: transparent;
+  color: var(--action-default);
+  font-size: 1rem;
+  line-height: 150%;
+  font-weight: 600;
+  border: unset;
+  padding: 0;
+  letter-spacing: 0.44px;
 }
 
-/* the circular arrow "chip" riding on the pill's right edge */
-a.button:any-link::after,
-button.button::after {
-  content: '';
-  flex: none;
-  box-sizing: border-box;
-  position: absolute;
-  top: 50%;
-  right: 0;
-  width: var(--button-circle-size);
-  height: var(--button-circle-size);
-  margin-right: var(--button-circle-overlap);
-  transform: translateY(-50%);
-  border: var(--button-circle-border-width) solid var(--dark-color);
-  border-radius: var(--button-pill-radius);
-  background-color: var(--dark-color);
-  -webkit-mask-image: url('/assets/icons/arrow-diagonal.svg');
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: 18px 18px;
-  mask-image: url('/assets/icons/arrow-diagonal.svg');
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: 18px 18px;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+a:hover,
+button:hover {
+  color: var(--action-hover);
 }
 
-a.button[aria-disabled="true"],
-button.button:disabled {
+a:focus,
+button:focus {
+  color: var(--action-focus);
+  outline: none;
+}
+
+button:disabled,
+button:disabled:hover {
   cursor: not-allowed;
-  pointer-events: none;
+  color: var(--grey-50);
+  border: none;
 }
 
-/* primary: solid Arctic Blue pill, white circle w/ dark border + dark arrow */
-a.button.primary,
-button.button.primary {
-  border-color: var(--color-primary);
-  background-color: var(--color-primary);
-  color: var(--background-color);
+a.button span[class^="icon"] {
+  display: inline-flex;
 }
 
-a.button.primary::after,
-button.button.primary::after {
-  border-color: var(--dark-color);
-  background-color: var(--dark-color);
+a.button.primary:any-link,
+button.primary,
+a.button.secondary:any-link,
+button.secondary {
+  padding: 0 20px;
+  border-radius: 24px;
+  height: 48px;
+}
+
+a.button.primary:any-link,
+button.primary {
+  background: var(--action-default);
+  color: var(--white);
+  border: solid 1px var(--action-default);
+}
+
+a.button.secondary:any-link,
+button.secondary {
+  background: var(--white);
+  color: var(--action-default);
+  border: 1px solid var(--action-default);
 }
 
 a.button.primary:hover,
-a.button.primary:focus-visible,
-button.button.primary:hover,
-button.button.primary:focus-visible {
-  border-color: var(--dark-color);
-  background-color: var(--dark-color);
-  color: var(--background-color);
-}
-
-a.button.primary:hover::after,
-a.button.primary:focus-visible::after,
-button.button.primary:hover::after,
-button.button.primary:focus-visible::after {
-  border-color: var(--color-primary);
-  background-color: var(--color-primary);
-}
-
-a.button.primary[aria-disabled="true"],
-a.button.primary[aria-disabled="true"]:hover,
-a.button.primary[aria-disabled="true"]:focus-visible,
-button.button.primary:disabled,
-button.button.primary:disabled:hover,
-button.button.primary:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
-}
-
-/* secondary: white pill with dark text, dark circle w/ white arrow */
-a.button.secondary,
-button.button.secondary {
-  border-color: var(--background-color);
-  background-color: var(--background-color);
-  color: var(--dark-color);
-}
-
-a.button.secondary::after,
-button.button.secondary::after {
-  border-color: var(--dark-color);
-  background-color: var(--dark-color);
-}
-
+button.primary:hover,
 a.button.secondary:hover,
-a.button.secondary:focus-visible,
-button.button.secondary:hover,
-button.button.secondary:focus-visible {
-  border-color: var(--color-primary);
-  background-color: var(--color-primary);
-  color: var(--background-color);
+button.secondary:hover {
+  color: var(--action-hover);
+  background: var(--white);
+  border: 1px solid var(--action-hover);
 }
 
-a.button.secondary:hover::after,
-a.button.secondary:focus-visible::after,
-button.button.secondary:hover::after,
-button.button.secondary:focus-visible::after {
-  border-color: var(--background-color);
-  background-color: var(--background-color);
+a.button.primary:focus,
+button.primary:focus,
+a.button.secondary:focus,
+button.secondary:focus {
+  color: var(--action-focus);
+  background: var(--white);
+  border: 1px solid var(--action-focus);
+  outline: none;
 }
 
-a.button.secondary[aria-disabled="true"],
-a.button.secondary[aria-disabled="true"]:hover,
-a.button.secondary[aria-disabled="true"]:focus-visible,
-button.button.secondary:disabled,
-button.button.secondary:disabled:hover,
-button.button.secondary:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
+button.primary:disabled,
+button.primary:disabled:hover,
+button.primary:disabled:focus {
+  cursor: not-allowed;
+  background-color: var(--grey-20);
+  color: var(--grey-50);
+  border-color: var(--grey-20);
 }
 
-/* high-impact call-to-action: same anatomy as primary, used for Buy Now etc. */
-a.button.accent,
-button.button.accent {
-  border-color: var(--color-primary);
-  background-color: var(--color-primary);
-  color: var(--background-color);
-  font-weight: 700;
+button.secondary:disabled,
+button.secondary:disabled:hover {
+  cursor: not-allowed;
+  background-color: var(--white);
+  color: var(--grey-50);
+  border-color: var(--grey-50);
 }
 
-a.button.accent::after,
-button.button.accent::after {
-  border-color: var(--dark-color);
-  background-color: var(--dark-color);
+a.button.small,
+button.small,
+a.button.primary.small,
+button.primary.small,
+a.button.secondary.small,
+button.secondary.small {
+  font-size: 0.75rem;
+  height: auto;
 }
 
-a.button.accent:hover,
-a.button.accent:focus-visible,
-button.button.accent:hover,
-button.button.accent:focus-visible {
-  border-color: var(--dark-color);
-  background-color: var(--dark-color);
-  color: var(--background-color);
+a.button.primary.small,
+button.primary.small,
+a.button.secondary.small,
+button.secondary.small {
+  padding: 3px 12px;
 }
 
-a.button.accent:hover::after,
-a.button.accent:focus-visible::after,
-button.button.accent:hover::after,
-button.button.accent:focus-visible::after {
-  border-color: var(--color-primary);
-  background-color: var(--color-primary);
+.dark a:any-link,
+.dark button {
+  background-color: transparent;
 }
 
-a.button.accent[aria-disabled="true"],
-a.button.accent[aria-disabled="true"]:hover,
-a.button.accent[aria-disabled="true"]:focus-visible,
-button.button.accent:disabled,
-button.button.accent:disabled:hover,
-button.button.accent:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
+.dark a.button.primary,
+.dark button.primary {
+  background: var(--white);
+  color: var(--black);
+}
+
+.dark a.button.secondary:any-link,
+.dark button.secondary {
+  background-color: transparent;
+}
+
+.dark a.button.primary:hover,
+.dark button.primary:hover {
+  color: #ae2d27;
+  border-color: #ae2d27;
+}
+
+.dark a.button.primary:focus,
+.dark button.primary:focus {
+  color: #82221d;
+  border-color: #82221d;
+  background: var(--action-hover);
+}
+
+.dark .button:disabled,
+.dark .button:disabled:focus,
+.dark .button:disabled:hover {
+  color: var(--grey-40);
+  border-color: var(--grey-40);
+  background: transparent;
+}
+
+.dark .button.primary:disabled,
+.dark .button.primary:disabled:focus,
+.dark .button.primary:disabled:hover {
+  background: var(--grey-70);
 }
 
 main img {
@@ -385,33 +497,107 @@ main img {
 
 .icon {
   display: inline-block;
-  height: 24px;
-  width: 24px;
 }
 
 .icon img {
-  height: 100%;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+video {
   width: 100%;
+  height: auto;
 }
 
-/* sections */
-main > .section {
-  margin: 40px 0;
+/* blocks */
+div[class$="-wrapper"]:not(:first-child) {
+  padding-top: 40px;
 }
 
-main > .section > div {
-  max-width: 1200px;
-  margin: auto;
-  padding: 0 24px;
+@media (width >= 1025px) {
+  div[class$="-wrapper"]:not(:first-child) {
+    padding-top: 60px;
+  }
 }
 
-main > .section:first-of-type {
+main {
+  margin-top: var(--nav-height);
+}
+
+main.no-top-margin {
   margin-top: 0;
 }
 
-@media (width >= 900px) {
-  main > .section > div {
-    padding: 0 32px;
+/* sections */
+main .section {
+  padding: var(--section-y-padding) var(--section-x-padding);
+}
+
+
+main .section:nth-last-child(2) {
+  padding-bottom: calc(2 * var(--section-y-padding));
+}
+
+main .section:first-child:not(.title-container) {
+  padding-top: 0;
+}
+
+main .section.nba-container:nth-last-child(2),
+main .section.padding-bottom-0 {
+  padding-bottom: 0;
+}
+
+@media (width >= 768px) {
+  :root {
+    --section-x-padding: 30px;
+    --grid-gap: 24px;
+  }
+}
+
+@media (width >= 1025px) {
+  :root {
+    --section-y-padding: 40px;
+    --section-x-padding: 40px;
+  }
+
+  :root .homepage,
+  :root .pdp {
+    --section-y-padding: 60px;
+  }
+
+  .section > div {
+    max-width: 1240px;
+    margin: auto;
+  }
+
+  .section > div.full-width {
+    max-width: 100vw;
+  }
+}
+
+@media (width >= 1440px) {
+  :root {
+    --section-x-padding: calc((100% - 1240px) / 2);
+  }
+}
+
+/* full width styles */
+.section .wrapper-full-width {
+  margin: 0;
+  width: 100%;
+  max-width: 100vw;
+}
+
+.block.full-width {
+  margin-left: calc(-1 * var(--section-x-padding));
+  margin-right: calc(-1 * var(--section-x-padding));
+}
+
+@media (width >= 1440px) {
+  .block.full-width {
+    margin-left: calc((100vw - 1240px) / -2);
+    margin-right: calc((100vw - 1240px) / -2);
   }
 }
 
@@ -419,6 +605,250 @@ main > .section:first-of-type {
 main .section.light,
 main .section.highlight {
   background-color: var(--light-color);
-  margin: 0;
-  padding: 40px 0;
+}
+
+/* heading with marker */
+.heading-with-marker::before {
+  content: "";
+  display: inline-block;
+  position: relative;
+  top: calc(-0.1 * 1em);
+  vertical-align: middle;
+  height: calc(4px + 0.7em);
+  margin-right: calc(5px + 0.2em);
+  border-left: calc(5px + 0.1em) solid #f00;
+}
+
+.section .width-medium {
+  max-width: 300px;
+  margin: auto;
+}
+
+.section.text-center {
+  text-align: center;
+}
+
+main .border-top {
+  border-top: 1px solid #e5e5e5;
+  margin-top: 40px;
+  padding-top: 40px;
+}
+
+.section-small {
+  max-width: 900px;
+  margin: auto;
+}
+
+.width-400 {
+  max-width: 400px;
+  margin: auto;
+}
+
+.width-700 {
+  max-width: 704px;
+  margin: auto;
+}
+
+.section-center .button-container {
+  display: flex;
+  justify-content: center;
+}
+
+/* styles to override onetrust */
+#onetrust-consent-sdk
+  #onetrust-pc-sdk
+  button:not(
+    #clear-filters-handler,
+    .ot-close-icon,
+    #filter-btn-handler,
+    .ot-remove-objection-handler,
+    .ot-obj-leg-btn-handler,
+    [aria-expanded],
+    .ot-link-btn
+  ),
+#onetrust-banner-sdk #onetrust-reject-all-handler,
+#onetrust-consent-sdk #onetrust-accept-btn-handler {
+  background-color: var(--link-color) !important;
+  border-color: transparent !important;
+}
+
+/* modal styles */
+body.modal-visible {
+  overflow: hidden;
+}
+
+/*
+  Hiding modal content when it is not in the modal yet.
+  By default the block needs to be added to the body until the js and css
+  are fetched for the block, but it should not be visible for the user.
+  Otherwhise (if the block is cutted from the body to early) the js and css
+  files for block won't load.
+*/
+:not(.modal-content) > .block[class^="modal-"],
+:not(.modal-content) > .block[class*=" modal-"] {
+  display: none;
+}
+
+body.modal-visible > *:not(.modal) {
+  filter: blur(4px);
+}
+
+.modal {
+  --modal-content-animation-start: translateY(calc(100%));
+  --modal-content-animation-end: translateY(0);
+  --modal-close-button-animation-start: translate(-50%, 90px);
+  --modal-close-button-animation-end: translate(-50%, 0);
+
+  z-index: 1001;
+  position: relative;
+}
+
+.modal.modal-hidden {
+  display: none;
+}
+
+.modal .modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #0006;
+}
+
+.modal .modal-content {
+  padding: 40px 20px;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  position: fixed;
+  background: var(--white);
+  top: 0;
+}
+
+.modal .modal-close-button {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 42px;
+  height: 42px;
+  background: var(--white);
+  border-radius: 50%;
+  border: solid 1px var(--action-default);
+}
+
+.modal .modal-close-button:hover,
+.modal .modal-close-button:active {
+  border-color: var(--action-hover);
+}
+
+.modal .modal-close-button span {
+  display: flex;
+}
+
+.modal .modal-close-button svg {
+  height: 18px;
+  width: 18px;
+}
+
+@media (width >= 768px) {
+  .modal {
+    --modal-content-animation-start: translateX(100%);
+    --modal-content-animation-end: translateX(0);
+    --modal-close-button-animation-start: translate(66px, 0);
+    --modal-close-button-animation-end: translate(-694px, 0);
+  }
+
+  .modal .modal-content {
+    padding: 60px 30px;
+    top: 0;
+    max-width: 670px;
+    right: 0;
+  }
+
+  .modal .modal-close-button {
+    bottom: 50%;
+    left: unset;
+    right: 0;
+  }
+}
+
+@media (width >= 1025px) {
+  .modal {
+    --modal-close-button-animation-end: translate(-928px, 0);
+  }
+
+  .modal .modal-content {
+    padding: 60px 40px;
+    max-width: 904px;
+  }
+}
+
+@media (width >= 1440px) {
+  .modal {
+    --modal-close-button-animation-end: translate(-1158px, 0);
+  }
+
+  .modal .modal-content {
+    padding: 60px 100px;
+    max-width: 1134px;
+  }
+}
+
+/* text page styles - used for cookie and policies pages */
+
+body.text-page ul {
+  list-style-position: inside;
+}
+
+body.text-page a:any-link {
+  text-wrap: auto;
+  overflow-wrap: anywhere;
+}
+
+body.text-page main > .section:first-child > .default-content-wrapper:first-child > h1:first-child {
+  padding-top: 40px;
+}
+
+@media (width >= 768px) {
+  body.text-page main .section {
+    max-width: 525px;
+    padding: 0;
+    margin: auto;
+  }
+}
+
+@media (width >= 1025px) {
+  body.text-page main .section {
+    max-width: 783px;
+  }
+
+  body.text-page main > .section:first-child > .default-content-wrapper:first-child > h1:first-child {
+    padding-top: 60px;
+  }
+}
+
+@media (width >= 1440px) {
+  body.text-page main .section {
+    max-width: 814px;
+  }
+}
+
+/* anchor links */
+.anchor-point {
+  display: block;
+  position: relative;
+  visibility: hidden;
+  height: 0;
+  top: calc(-1 * var(--nav-height) - 10px);
+}
+
+main .anchor-target {
+  scroll-margin-top: calc(var(--nav-height) + 10px);
+}
+
+/* country selector styles */
+.country-selector-page main {
+  min-height: 82.5vh;
 }

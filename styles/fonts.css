@@ -1,1 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap');
+/* stylelint-disable max-line-length */
+@font-face {
+  font-family: Boxed;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/Boxed-Regular.otf") format('opentype');
+}
+
+@font-face {
+  font-family: Boxed;
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/Boxed-DemiBold.otf") format('opentype');
+}
+
+@font-face {
+  font-family: Boxed;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/Boxed-Medium.otf") format('opentype');
+}
