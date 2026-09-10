@@ -15,6 +15,59 @@ main .hero-container .hero-wrapper {
   height: 100vh;
 }
 
+/* CTA variant: a compact, centered call-to-action band on the light
+   canvas (not a full-viewport image hero). Used for "Need help choosing?"
+   style prompts. */
+.hero.cta {
+  height: auto;
+  background-color: var(--surface);
+  border-radius: var(--card-radius);
+  padding: 56px 24px;
+  text-align: center;
+  color: var(--text-color);
+}
+
+.hero.cta h2 {
+  color: var(--text-color);
+  margin-bottom: 12px;
+}
+
+.hero.cta p {
+  color: var(--color-accent);
+  margin: 0 auto 24px;
+  max-width: 560px;
+}
+
+.hero.cta a:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 28px;
+  height: 48px;
+  border-radius: 24px;
+  background: var(--color-primary);
+  color: var(--white);
+  font-weight: 600;
+}
+
+.hero.cta a:hover {
+  background: var(--color-primary-hover);
+  color: var(--white);
+}
+
+.hero.cta .hero-scroll-icon,
+.hero.cta .hero-flag {
+  display: none;
+}
+
+.hero.cta .hero-text-wrapper {
+  color: var(--text-color);
+  height: auto;
+  padding: 0;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
 .da-preview .hero {
   height: 600px;
 }

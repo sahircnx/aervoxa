@@ -16,6 +16,8 @@
 
 .product-showcase-img-col img {
   width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
   border-radius: var(--card-radius);
   background-color: var(--surface-muted);
   box-shadow: 0 20px 40px rgb(11 31 51 / 10%);
