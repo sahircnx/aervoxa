@@ -375,3 +375,102 @@ main .hero-container .hero-wrapper {
   max-width: 640px;
   margin: 0 auto;
 }
+
+/* ---- Auto-slide carousel variant (homepage banner) ---- */
+.hero.carousel {
+  height: 82vh;
+  min-height: 460px;
+  max-height: 760px;
+}
+
+.da-preview .hero.carousel {
+  height: 600px;
+}
+
+.hero.carousel .hero-carousel {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.hero.carousel .hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 900ms ease-in-out;
+}
+
+.hero.carousel .hero-slide.active {
+  opacity: 1;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.hero.carousel .hero-slide picture,
+.hero.carousel .hero-slide img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* darkening scrim so overlaid text stays readable across all slides */
+.hero.carousel .hero-carousel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgb(11 31 51 / 55%) 0%, rgb(11 31 51 / 20%) 55%, rgb(11 31 51 / 10%) 100%);
+  z-index: 1;
+}
+
+.hero.carousel .hero-text-wrapper {
+  position: relative;
+  z-index: 2;
+  color: var(--white);
+}
+
+.hero.carousel .hero-text-wrapper .h1,
+.hero.carousel .hero-text-wrapper h1,
+.hero.carousel .hero-text-wrapper p,
+.hero.carousel .hero-text-wrapper li {
+  color: var(--white);
+}
+
+/* dot controls */
+.hero.carousel .hero-dots {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 3;
+}
+
+.hero.carousel .hero-dot {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--white);
+  background: transparent;
+  cursor: pointer;
+  transition: background 200ms ease, transform 200ms ease;
+}
+
+.hero.carousel .hero-dot.active {
+  background: var(--white);
+  transform: scale(1.15);
+}
+
+.hero.carousel .hero-dot:hover {
+  background: rgb(255 255 255 / 60%);
+}
+
+@media (width >= 768px) {
+  .hero.carousel .hero-dots {
+    left: 40px;
+    transform: none;
+  }
+}

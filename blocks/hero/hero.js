@@ -136,12 +136,101 @@ const startCountdown = (block, eventDate) => {
   updateCountdow();
 };
 
+const SLIDE_INTERVAL = 5000; // ms between auto-advances
+
+/**
+ * Build an auto-advancing background carousel from the hero's pictures.
+ * Slides are stacked and cross-faded; the hero text stays overlaid on top.
+ * Adds dot controls, pauses on hover/focus, and honours reduced-motion.
+ * @param {Element} block the .hero.carousel block
+ * @param {Element} firstCell the hero's first content cell
+ */
+function buildCarousel(block, firstCell) {
+  const pictures = [...firstCell.querySelectorAll('picture')];
+  if (pictures.length === 0) return;
+
+  const track = document.createElement('div');
+  track.className = 'hero-carousel';
+
+  pictures.forEach((picture, i) => {
+    const img = picture.querySelector('img');
+    const optimized = createOptimizedPicture(img.src, img.alt || '', i === 0, [{ width: '2000' }]);
+    const slide = document.createElement('div');
+    slide.className = 'hero-slide';
+    if (i === 0) slide.classList.add('active');
+    slide.append(optimized);
+    track.append(slide);
+    // remove the original authored picture (and its wrapping <p> if empty)
+    const wrap = picture.closest('p');
+    picture.remove();
+    if (wrap && !wrap.textContent.trim() && !wrap.querySelector('picture, img')) wrap.remove();
+  });
+
+  firstCell.prepend(track);
+
+  const slides = [...track.children];
+  if (slides.length < 2) return; // nothing to rotate
+
+  const dots = document.createElement('div');
+  dots.className = 'hero-dots';
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'hero-dot';
+    dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+    if (i === 0) dot.classList.add('active');
+    dots.append(dot);
+  });
+  block.append(dots);
+
+  let current = 0;
+  const dotEls = [...dots.children];
+  const show = (next) => {
+    slides[current].classList.remove('active');
+    dotEls[current].classList.remove('active');
+    current = (next + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dotEls[current].classList.add('active');
+  };
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) {
+    dotEls.forEach((dot, i) => dot.addEventListener('click', () => show(i)));
+    return;
+  }
+
+  let timer = setInterval(() => show(current + 1), SLIDE_INTERVAL);
+  const restart = () => {
+    clearInterval(timer);
+    timer = setInterval(() => show(current + 1), SLIDE_INTERVAL);
+  };
+
+  dotEls.forEach((dot, i) => dot.addEventListener('click', () => { show(i); restart(); }));
+  block.addEventListener('mouseenter', () => clearInterval(timer));
+  block.addEventListener('mouseleave', restart);
+  block.addEventListener('focusin', () => clearInterval(timer));
+  block.addEventListener('focusout', restart);
+}
+
 export default function decorate(block) {
   const firstCell = block.querySelector(':scope > div > div');
   const video = firstCell.querySelector('video');
   const headings = firstCell.querySelectorAll('h1, h2, h3, h4, h5, h6');
   const links = firstCell.querySelectorAll('a');
   const dateEl = block.querySelector(':scope > div:nth-child(2) > div');
+  const isCarousel = block.classList.contains('carousel');
+
+  if (isCarousel) {
+    buildCarousel(block, firstCell);
+    const textWrapper = document.createElement('div');
+    textWrapper.classList.add('hero-text-wrapper', 'dark');
+    textWrapper.append(...firstCell.querySelectorAll(':scope > *:not(.hero-carousel)'));
+    firstCell.append(textWrapper);
+    headings.forEach((h) => { h.classList.add('h1'); });
+    links.forEach((link, index) => { link.classList.add(index ? 'secondary' : 'primary'); });
+    return;
+  }
+
   const picturesArr = firstCell.querySelectorAll('picture');
 
   picturesArr.forEach((picture, i) => {
