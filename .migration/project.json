@@ -3,7 +3,8 @@
     "aervoxa": {
       "previewOrg": "sahircnx",
       "previewSite": "aervoxa",
-      "contentHostUrl": "https://content.da.live/sahircnx/aervoxa/"
+      "contentHostUrl": "https://content.da.live/sahircnx/aervoxa/",
+      "botProtected": true
     }
   }
 }
