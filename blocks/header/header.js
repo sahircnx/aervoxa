@@ -1,4 +1,3 @@
-import { getMetadata, getRootPath } from '../../scripts/aem.js';
 import { addAnimateInOut } from '../../scripts/modal-helper.js';
 import { customDecoreateIcons } from '../../scripts/decorate-icon-helper.js';
 import { loadFragment } from '../fragment/fragment.js';
@@ -188,9 +187,7 @@ async function loadCountrySelectorBlock() {
  */
 export default async function decorate(block) {
   // load nav as fragment
-  const navMeta = getMetadata('nav');
-  // const navPath = navMeta ? new URL(navMeta, window.location).pathname : `${getRootPath()}/nav`;
-  const navPath = `/nav`;
+  const navPath = '/nav';
   const fragment = await loadFragment(navPath);
 
   // decorate nav DOM
